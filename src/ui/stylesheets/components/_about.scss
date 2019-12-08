@@ -1,0 +1,58 @@
+.c-about {
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.c-about__item {
+  padding: 10px 20px;
+  border-bottom: 1px solid #eee;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+  .icon {
+    top: 10px;
+    right: 20px;
+    position: absolute;
+    color: #6e6e6e;
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
+
+a.c-about__item {
+  &:hover {
+    background-color: #fafafa;
+  }
+  &:active {
+    background-color: #f8faff;
+  }
+}
+
+.c-about__meta {
+  margin-top: 10px;
+
+  textview {
+    color: $secondary-text-color;
+    font-size: 12px;
+    display: block;
+  }
+}
+
+.c-about__icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  display: inline-block;
+  background-size: contain;
+  background-position: center;
+  background-image: url(../images/logo.png);
+}
+
+.c-about__name {
+  font-size: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<lcui-app>
+  <resource type="text/css" src="assets/stylesheets/lc-design.css"/>
+  <resource type="text/css" src="assets/stylesheets/app.css"/>
+  <ui>
+    <w class="window">
+      <w class="window-content" id="window-content">
+        <resource type="text/xml" src="assets/views/home.xml"/>
+      </w>
+      <scrollbar target="window-content" />
+    </w>
+  </ui>
+</lcui-app>

@@ -1,0 +1,7 @@
+#define APP_NAME L"{{name}}"
+#define APP_VERSION "{{version}}"
+#define APP_BUILD_TIME "{{build_time}}"
+#define APP_DESCRIPTION L"{{description}}"
+#define APP_HOMEPAGE "{{homepage}}"
+#define APP_BUGS_URL "{{bugs.url}}"
+#define OS_INFO "{{os.type}} {{os.arch}} {{os.release}}"

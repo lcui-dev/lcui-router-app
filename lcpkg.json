@@ -1,0 +1,53 @@
+{
+  "name": "lc-design-app",
+  "version": "0.1.0",
+  "description": "A minimal LCUI application for preview LC Design component library",
+  "author": "lc-soft",
+  "homepage": "https://github.com/lc-ui/lcui-quick-start",
+  "bugs": {
+    "url": "https://github.com/lc-ui/lcui-quick-start/issues"
+  },
+  "arch": [
+    "x86",
+    "x64"
+  ],
+  "platform": [
+    "windows",
+    "uwp",
+    "linux"
+  ],
+  "mode": [
+    "debug",
+    "release"
+  ],
+  "scripts": {
+    "start": "node ./scripts/start.js"
+  },
+  "private": true,
+  "dependencies": {
+    "LCUI": {
+      "version": "v1.3.0",
+      "uri": "github:lc-soft/LCUI",
+      "resolved": {
+        "x64-uwp": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x64-uwp.lcpkg.zip",
+        "all": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x86-windows.lcpkg.zip",
+        "x64-windows": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x64-windows.lcpkg.zip",
+        "x86-uwp": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x86-uwp.lcpkg.zip",
+        "x86-windows": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x86-windows.lcpkg.zip"
+      },
+      "linkage": "auto"
+    },
+    "lc-design": {
+      "version": "v1.0.0",
+      "uri": "github:lc-ui/lc-design",
+      "resolved": {
+        "all": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x86-windows.lcpkg.zip",
+        "x64-uwp": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x64-uwp.lcpkg.zip",
+        "x64-windows": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x64-windows.lcpkg.zip",
+        "x86-uwp": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x86-uwp.lcpkg.zip",
+        "x86-windows": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x86-windows.lcpkg.zip"
+      },
+      "linkage": "auto"
+    }
+  }
+}

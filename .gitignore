@@ -1,0 +1,17 @@
+build
+.xmake
+.vscode
+lcpkg
+node_modules
+include/config.h
+include/version.h
+app/app
+app/store.data
+app/assets/fonts
+app/assets/stylesheets
+Release
+Debug
+CMakeLists.txt
+*.pdb
+*.exe
+*.dll
