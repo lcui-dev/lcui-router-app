@@ -1,1 +1,1 @@
-extern void UI_InitAboutComponent(void);
+extern void UI_InitAbout(void);

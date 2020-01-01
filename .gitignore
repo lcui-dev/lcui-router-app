@@ -12,6 +12,7 @@ app/assets/stylesheets
 Release
 Debug
 CMakeLists.txt
+!src/**/**/CMakeLists.txt
 *.pdb
 *.exe
 *.dll

@@ -1,0 +1,46 @@
+.c-navbar {
+  padding: 8px 5px;
+  border-bottom: 1px solid $border-color;
+}
+
+.c-navbar__btn {
+  height: 30px;
+  min-width: 28px;
+  line-height: 28px;
+  margin-right: 5px;
+  border-radius: 14px;
+  padding: 0 4px;
+  font-size: 20px;
+  display: inline-block;
+
+  &:hover {
+    background-color: $navbar-btn-bg-hover;
+  }
+
+  &:active {
+    background-color: $navbar-btn-bg-active;
+  }
+
+  &:disabled {
+    color: $gray-600;
+    background-color: transparent;
+  }
+}
+
+.c-navbar__input {
+  padding: 4px 16px;
+  line-height: 20px;
+  border: 0;
+  border-radius: 14px;
+  background-color: $navbar-input-bg;
+
+  &:hover {
+    background-color: $navbar-input-bg-hover;
+  }
+
+  &:focus {
+    border: 0;
+    background-color: $navbar-input-bg-focus;
+    box-shadow: 0 0 0 2px rgba($primary, 0.4);
+  }
+}

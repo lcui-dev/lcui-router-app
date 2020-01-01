@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<lcui-app>
+  <ui>
+    <w class="container">
+      <w class="head">
+        <icon name="emoticon-cool-outline"/>
+        <h1>Hello, World!</h1>
+        <p class="lead">This is a very simple browser-like application to show the LCUI and LCUI Router features.</p>
+      </w>
+      <w class="row">
+        <w class="col col-6">
+          <w class="buttons-wrapper mb-4">
+            <p>LCUI is a freely available software library for building user interfaces. It is written in C and supports the use of XML and CSS to describe the graphical interface of simple desktop apps.</p>
+            <a class="btn btn-outline-primary" href="https://github.com/lc-soft/LCUI">
+              See more
+            </a>
+          </w>
+        </w>
+        <w class="col col-6">
+          <w class="buttons-wrapper">
+            <p>LCUI Router is the official router for LCUI. It provides a similar development experience to the Vue Router and make building multiple views applications with LCUI a breeze.</p>
+            <a class="btn btn-outline-primary" href="https://github.com/lc-soft/lcui-router">
+              See more
+            </a>
+          </w>
+        </w>
+      </w>
+    </w>
+  </ui>
+</lcui-app>

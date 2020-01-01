@@ -39,9 +39,11 @@ if(WIN32)
         optimized LCUI
         optimized LCUIMain
         optimized LCDesign
+        optimized LCUIRouter
         debug "${LCPKG_DIR}/debug/lib/LCUI.lib"
         debug "${LCPKG_DIR}/debug/lib/LCUIMain.lib"
         debug "${LCPKG_DIR}/debug/lib/LCDesign.lib"
+        debug "${LCPKG_DIR}/debug/lib/LCUIRouter.lib"
     )
 else()
     target_link_libraries(
@@ -52,7 +54,9 @@ else()
         AppLib
         debug "${LCPKG_DIR}/debug/lib/LCUI"
         debug "${LCPKG_DIR}/debug/lib/LCDesign"
+        debug "${LCPKG_DIR}/debug/lib/LCUIRouter"
         optimized LCUI
         optimized LCDesign
+        optimized LCUIRouter
     )
 endif(WIN32)

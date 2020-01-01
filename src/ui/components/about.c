@@ -84,7 +84,7 @@ void About_OnInit(LCUI_Widget w)
 	Widget_AddClass(w, "c-about");
 }
 
-void UI_InitAboutComponent(void)
+void UI_InitAbout(void)
 {
 	about_proto = LCUIWidget_NewPrototype("about", NULL);
 	about_proto->init = About_OnInit;

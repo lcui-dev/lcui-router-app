@@ -1,8 +1,8 @@
-# lc-design-app
+# lc-router-app
 
 (**English**/[中文](README.zh-cn.md))
 
-**Clone and run to preview an example of the LC Design component library.**
+**Clone and run for a quick way to see LCUI Router in action.**
 
 ## To Use
 
@@ -21,10 +21,10 @@ From your command line:
 
 ```shell
 # Clone this repository
-git clone https://github.com/lc-ui/lc-design-app
+git clone https://github.com/lc-ui/lc-router-app
 
 # Go into the repository
-cd lc-design-app
+cd lc-router-app
 
 # Install NodeJS dependencies
 npm install
@@ -45,7 +45,6 @@ lcpkg run start --mode debug
 - [.scss](https://sass-lang.com/guide) files for describe the user interface style.
 - `about` component for display app infomation.
 - `home` view that implements simple layout and interaction.
-- `preview` view that previews the effects of some of the components of the [LC Design](https://github.com/lc-ui/lc-design).
 
 ## Project Structure
 

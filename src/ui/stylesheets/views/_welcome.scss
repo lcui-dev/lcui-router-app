@@ -1,0 +1,22 @@
+.v-welcome {
+  padding: 40px 0 0 0;
+
+  .buttons-wrapper {
+    margin-left: -5px;
+    margin-right: -5px;
+    padding: 5px;
+  }
+  .head {
+    margin-bottom: 24px;
+    h1, p {
+      text-align: center;
+    }
+
+    .icon {
+      color: $pink;
+      font-size: 64px;
+      display: block;
+      text-align: center;
+    }
+  }
+}

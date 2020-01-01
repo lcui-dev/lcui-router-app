@@ -3,11 +3,6 @@
   <resource type="text/css" src="assets/stylesheets/lc-design.css"/>
   <resource type="text/css" src="assets/stylesheets/app.css"/>
   <ui>
-    <w class="window">
-      <w class="window-content" id="window-content">
-        <resource type="text/xml" src="assets/views/home.xml"/>
-      </w>
-      <scrollbar target="window-content" />
-    </w>
+    <browser id="browser" />
   </ui>
 </lcui-app>

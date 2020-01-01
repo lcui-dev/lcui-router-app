@@ -21,31 +21,35 @@
     "release"
   ],
   "scripts": {
-    "start": "node ./scripts/start.js"
+    "build:bin": "node ./scripts/build-bin.js",
+    "build:css": "node ./scripts/build-css.js",
+    "configure": "node ./scripts/configure.js",
+    "run": "node ./scripts/run.js",
+    "start": "lcpkg run configure && lcpkg run build:bin && lcpkg run build:css && lcpkg run run"
   },
   "private": true,
   "dependencies": {
-    "LCUI": {
-      "version": "v1.3.0",
-      "uri": "github:lc-soft/LCUI",
+    "lcui-router": {
+      "version": "0.1.0",
+      "uri": "file:C:\\Users\\LC\\Documents\\GitHub\\lcui-router\\lcpkg\\dist\\lcui-router-0.1.0_all.lcpkg.zip",
       "resolved": {
-        "x64-uwp": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x64-uwp.lcpkg.zip",
-        "all": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x86-windows.lcpkg.zip",
-        "x64-windows": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x64-windows.lcpkg.zip",
-        "x86-uwp": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x86-uwp.lcpkg.zip",
-        "x86-windows": "https://github.com/lc-soft/LCUI/releases/download/v1.3.0/LCUI-1.3.0_x86-windows.lcpkg.zip"
+        "all": "C:\\Users\\LC\\Documents\\GitHub\\lcui-router\\lcpkg\\dist\\lcui-router-0.1.0_all.lcpkg.zip"
+      },
+      "linkage": "auto"
+    },
+    "LCUI": {
+      "version": "1.3.0",
+      "uri": "file:C:\\Users\\LC\\Documents\\GitHub\\LCUI\\lcpkg\\dist\\LCUI-1.3.0_all.lcpkg.zip",
+      "resolved": {
+        "all": "C:\\Users\\LC\\Documents\\GitHub\\LCUI\\lcpkg\\dist\\LCUI-1.3.0_all.lcpkg.zip"
       },
       "linkage": "auto"
     },
     "lc-design": {
-      "version": "v1.0.0",
-      "uri": "github:lc-ui/lc-design",
+      "version": "1.0.0",
+      "uri": "file:C:\\Users\\LC\\Documents\\GitHub\\lc-design\\lcpkg\\dist\\lc-design-1.0.0_all.lcpkg.zip",
       "resolved": {
-        "all": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x86-windows.lcpkg.zip",
-        "x64-uwp": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x64-uwp.lcpkg.zip",
-        "x64-windows": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x64-windows.lcpkg.zip",
-        "x86-uwp": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x86-uwp.lcpkg.zip",
-        "x86-windows": "https://github.com/lc-ui/lc-design/releases/download/v1.0.0/lc-design-1.0.0_x86-windows.lcpkg.zip"
+        "all": "C:\\Users\\LC\\Documents\\GitHub\\lc-design\\lcpkg\\dist\\lc-design-1.0.0_all.lcpkg.zip"
       },
       "linkage": "auto"
     }
