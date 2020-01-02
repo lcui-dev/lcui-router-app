@@ -9,6 +9,8 @@ typedef struct FrameTabRec_ {
 	LCUI_Widget spinner;
 	LCUI_Widget text;
 	LCUI_Widget close;
+	LCUI_Widget left_divider;
+	LCUI_Widget right_divider;
 } FrameTabRec, *FrameTab;
 
 static LCUI_WidgetPrototype frame_tab_proto;
@@ -30,16 +32,22 @@ static void FrameTab_OnInit(LCUI_Widget w)
 	self->spinner = LCUIWidget_New("spinner");
 	self->text = LCUIWidget_New("textview");
 	self->close = LCUIWidget_New("icon");
+	self->left_divider = LCUIWidget_New(NULL);
+	self->right_divider = LCUIWidget_New(NULL);
 	Icon_SetName(self->icon, "earth");
 	Icon_SetName(self->close, "close");
 	Widget_AddClass(self->icon, "c-frame-tab__icon");
 	Widget_AddClass(self->spinner, "c-frame-tab__spinner");
 	Widget_AddClass(self->text, "c-frame-tab__text");
 	Widget_AddClass(self->close, "c-frame-tab__close");
+	Widget_AddClass(self->left_divider, "c-frame-tab__left-divider");
+	Widget_AddClass(self->right_divider, "c-frame-tab__right-divider");
 	Widget_Append(w, self->icon);
 	Widget_Append(w, self->spinner);
 	Widget_Append(w, self->text);
 	Widget_Append(w, self->close);
+	Widget_Append(w, self->left_divider);
+	Widget_Append(w, self->right_divider);
 	Widget_AddClass(w, "c-frame-tab");
 	Widget_BindEvent(self->close, "click", FrameTab_OnClose, w, NULL);
 }
