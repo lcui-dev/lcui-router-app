@@ -1,4 +1,5 @@
 #include <LCUI.h>
+#include <LCDesign.h>
 #include <LCUI/gui/widget.h>
 #include "../components/frame-tab.h"
 #include "browser.h"
@@ -17,11 +18,17 @@ typedef struct PageRec_ {
 typedef struct BrowserViewRec_ {
 	int page_id_count;
 	Page current_page;
+	LCUI_Widget btn_add;
 	LCUI_Widget tabbar;
 	LinkedList pages;
 } BrowserViewRec, *BrowserView;
 
 static LCUI_WidgetPrototype browser_proto;
+
+static void BrowserView_OnBtnAddTabClick(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
+{
+	BrowserView_Active(e->data, BrowserView_Load(e->data, NULL));
+}
 
 static void BrowserView_OnInit(LCUI_Widget w)
 {
@@ -31,10 +38,15 @@ static void BrowserView_OnInit(LCUI_Widget w)
 	self->tabbar = LCUIWidget_New(NULL);
 	self->page_id_count = 0;
 	self->current_page = NULL;
+	self->btn_add = LCUIWidget_New("icon");
 	LinkedList_Init(&self->pages);
+	Icon_SetName(self->btn_add, "plus");
 	Widget_AddClass(w, "v-browser");
+	Widget_AddClass(self->btn_add, "v-browser__btn-add-tab");
 	Widget_AddClass(self->tabbar, "v-browser__tabbar");
+	Widget_Append(self->tabbar, self->btn_add);
 	Widget_Append(w, self->tabbar);
+	Widget_BindEvent(self->btn_add, "click", BrowserView_OnBtnAddTabClick, w, NULL);
 	BrowserView_Load(w, NULL);
 }
 
@@ -107,6 +119,7 @@ int BrowserView_Load(LCUI_Widget w, const char *path)
 	FrameTab_SetTextW(page->tab, page->title);
 	FrameTab_SetLoading(page->tab, TRUE);
 	Widget_Append(self->tabbar, page->tab);
+	Widget_Append(self->tabbar, self->btn_add);
 	Widget_BindEvent(page->tab, "mousedown", BrowserView_OnPageTabClick,
 			 page, NULL);
 	Widget_BindEvent(page->tab, "TabClose", BrowserView_OnPageTabClose,

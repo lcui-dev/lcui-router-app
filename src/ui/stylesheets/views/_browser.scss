@@ -6,3 +6,20 @@
   background-color: $browser-tabbar-bg;
   padding: 8px 8px 0 8px;
 }
+
+.v-browser__btn-add-tab {
+  width: 28px;
+  font-size: 18px;
+  line-height: 28px;
+  border-radius: 14px;
+  margin-left: 10px;
+  text-align: center;
+  margin-top: 4px;
+
+  &:hover {
+    background-color: $browser-btn-add-tab-bg-hover;
+  }
+  &:active {
+    background-color: $browser-btn-add-tab-bg-active;
+  }
+}
