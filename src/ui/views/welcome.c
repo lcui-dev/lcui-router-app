@@ -27,7 +27,7 @@ static void WelcomeView_OnInit(LCUI_Widget w)
 	Widget_AddData(w, welcome_proto, 0);
 	Widget_AddClass(w, "v-welcome");
 	Widget_SetTitleW(w, L"Welcome!");
-	LCUI_SetTimeout(1000, WelcomeView_OnTimer, w);
+	LCUI_SetTimeout(500, WelcomeView_OnTimer, w);
 }
 
 void UI_InitWelcomeView(void)

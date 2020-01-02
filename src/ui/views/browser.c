@@ -43,6 +43,7 @@ static void BrowserView_OnDestroy(LCUI_Widget w)
 	BrowserView self;
 
 	self = Widget_GetData(w, browser_proto);
+	LinkedList_ClearData(&self->pages, free);
 }
 
 static void BrowserView_OnPageTabClick(LCUI_Widget w, LCUI_WidgetEvent e,
@@ -52,6 +53,15 @@ static void BrowserView_OnPageTabClick(LCUI_Widget w, LCUI_WidgetEvent e,
 
 	page = e->data;
 	BrowserView_Active(page->browser, page->id);
+}
+
+static void BrowserView_OnPageTabClose(LCUI_Widget w, LCUI_WidgetEvent e,
+				       void *arg)
+{
+	Page page;
+
+	page = e->data;
+	BrowserView_Close(page->browser, page->id);
 }
 
 static void BrowserView_OnPageLoad(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
@@ -99,6 +109,8 @@ int BrowserView_Load(LCUI_Widget w, const char *path)
 	Widget_Append(self->tabbar, page->tab);
 	Widget_BindEvent(page->tab, "mousedown", BrowserView_OnPageTabClick,
 			 page, NULL);
+	Widget_BindEvent(page->tab, "TabClose", BrowserView_OnPageTabClose,
+			 page, NULL);
 	Widget_BindEvent(page->frame, "PageLoad", BrowserView_OnPageLoad, page,
 			 NULL);
 	Widget_BindEvent(page->frame, "PageLoaded", BrowserView_OnPageLoaded,
@@ -133,6 +145,42 @@ LCUI_BOOL BrowserView_Active(LCUI_Widget w, int id)
 	Widget_Append(w, page->frame);
 	self->current_page = page;
 	return TRUE;
+}
+
+LCUI_BOOL BrowserView_Close(LCUI_Widget w, int id)
+{
+	Page page;
+	BrowserView self;
+	LinkedListNode *node;
+
+	self = Widget_GetData(w, browser_proto);
+	for (LinkedList_Each(node, &self->pages)) {
+		page = node->data;
+		if (page->id != id) {
+			continue;
+		}
+		Widget_Destroy(page->tab);
+		Widget_Destroy(page->frame);
+		if (self->current_page == page) {
+			if (node->next) {
+				page = node->next->data;
+			} else if (node->prev) {
+				page = node->prev->data;
+			}
+			self->current_page = page;
+			if (page) {
+				Widget_AddClass(page->tab, "active");
+				Widget_Append(w, page->frame);
+			}
+		}
+		LinkedList_Unlink(&self->pages, node);
+		free(node->data);
+		if (self->pages.length < 1) {
+			LCUI_Quit();
+		}
+		return TRUE;
+	}
+	return FALSE;
 }
 
 void UI_InitBrowserView(void)

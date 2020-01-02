@@ -13,6 +13,14 @@ typedef struct FrameTabRec_ {
 
 static LCUI_WidgetPrototype frame_tab_proto;
 
+static void FrameTab_OnClose(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
+{
+	LCUI_WidgetEventRec ev;
+
+	LCUI_InitWidgetEvent(&ev, "TabClose");
+	Widget_TriggerEvent(e->data, &ev, NULL);
+}
+
 static void FrameTab_OnInit(LCUI_Widget w)
 {
 	FrameTab self;
@@ -33,6 +41,7 @@ static void FrameTab_OnInit(LCUI_Widget w)
 	Widget_Append(w, self->text);
 	Widget_Append(w, self->close);
 	Widget_AddClass(w, "c-frame-tab");
+	Widget_BindEvent(self->close, "click", FrameTab_OnClose, w, NULL);
 }
 
 static void FrameTab_OnDestroy(LCUI_Widget w)
