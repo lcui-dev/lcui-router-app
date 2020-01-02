@@ -10,8 +10,9 @@
 
 .c-frame-tab__icon {
   width: 16px;
-  height: 16px;
+  line-height: 16px;
   font-size: 16px;
+  margin-top: ($browser-tabbar-line-height - 16px) / 2;
 }
 
 .c-frame-tab__text {
