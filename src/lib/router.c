@@ -20,9 +20,9 @@ static void router_add_default_config(router_t *router)
 	router_config_destroy(config);
 
 	config = router_config_create();
-	router_config_set_name(config, "about");
-	router_config_set_path(config, "/about");
-	router_config_set_component(config, NULL, "about");
+	router_config_set_name(config, "help");
+	router_config_set_path(config, "/help");
+	router_config_set_component(config, NULL, "help");
 	router_add_route_record(router, config, NULL);
 	router_config_destroy(config);
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<lcui-app>
+  <ui>
+    <w class="container">
+      <text class="v-help__title">About this app</text>
+      <about />
+    </w>
+  </ui>
+</lcui-app>

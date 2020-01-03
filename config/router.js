@@ -10,9 +10,9 @@ module.exports = [
     component: 'welcome'
   },
   {
-    name: 'about',
-    path: '/about',
-    component: 'about'
+    name: 'help',
+    path: '/help',
+    component: 'help'
   },
   {
     path: '*',
