@@ -1,9 +1,10 @@
 
 #include <stdio.h>
 #include <LCUI.h>
+#include <LCDesign.h>
+#include <LCUI/timer.h>
 #include <LCUI/gui/widget.h>
 #include <LCUI/gui/widget/textedit.h>
-#include <LCDesign.h>
 #include "frame.h"
 #include "router.h"
 
@@ -23,14 +24,16 @@ typedef struct FrameViewRec_ {
 static size_t frame_id_count = 0;
 static LCUI_WidgetPrototype frame_proto;
 
-static void BrowserView_UpdateNavbar(LCUI_Widget w)
+static void BrowserView_UpdateNavbar(void *arg)
 {
 	size_t index;
 	size_t length;
 	router_history_t *history;
 
 	FrameView self;
+	LCUI_Widget w;
 
+	w = arg;
 	self = Widget_GetData(w, frame_proto);
 	history = router_get_history(self->router);
 	index = router_history_get_index(history);
@@ -47,6 +50,30 @@ static void BrowserView_UpdateNavbar(LCUI_Widget w)
 	}
 }
 
+static void FrameView_OnBtnBackClick(LCUI_Widget w, LCUI_WidgetEvent e,
+				     void *arg)
+{
+	router_back(((FrameView)e->data)->router);
+}
+
+static void FrameView_OnBtnForwardClick(LCUI_Widget w, LCUI_WidgetEvent e,
+				     void *arg)
+{
+	router_forward(((FrameView)e->data)->router);
+}
+
+static void FrameView_OnBtnHomeClick(LCUI_Widget w, LCUI_WidgetEvent e,
+				     void *arg)
+{
+	router_location_t *location;
+	FrameView self;
+
+	self = e->data;
+	location = router_location_create(NULL, "/welcome");
+	router_push(self->router, location);
+	router_location_destroy(location);
+}
+
 static void FrameView_OnRouteUpdate(void *arg, const router_route_t *to,
 				    const router_route_t *from)
 {
@@ -58,7 +85,7 @@ static void FrameView_OnRouteUpdate(void *arg, const router_route_t *to,
 		path = router_route_get_full_path(to);
 		TextEdit_SetText(self->input, path);
 	}
-	BrowserView_UpdateNavbar(arg);
+	LCUI_SetTimeout(0, BrowserView_UpdateNavbar, arg);
 }
 
 static void FrameView_OnInit(LCUI_Widget w)
@@ -95,6 +122,12 @@ static void FrameView_OnInit(LCUI_Widget w)
 	Icon_SetName(self->btn_forward, "arrow-right");
 	Icon_SetName(self->btn_refresh, "refresh");
 	Icon_SetName(self->btn_home, "home-outline");
+	Widget_BindEvent(self->btn_back, "click", FrameView_OnBtnBackClick,
+			 self, NULL);
+	Widget_BindEvent(self->btn_forward, "click", FrameView_OnBtnForwardClick,
+			 self, NULL);
+	Widget_BindEvent(self->btn_home, "click", FrameView_OnBtnHomeClick,
+			 self, NULL);
 	Widget_Append(w, self->navbar);
 	Widget_Append(w, self->content);
 	FrameView_OnRouteUpdate(w, router_get_current_route(self->router),
