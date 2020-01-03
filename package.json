@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "lc-design-app",
+  "name": "lcui-router-app",
   "version": "0.1.0",
-  "description": "A minimal LCUI application for preview LC Design component library",
+  "description": "A very simple browser-like application to show the LCUI and LCUI Router features",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
