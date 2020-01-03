@@ -27,7 +27,7 @@ static LCUI_WidgetPrototype browser_proto;
 
 static void BrowserView_OnBtnAddTabClick(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
 {
-	BrowserView_Active(e->data, BrowserView_Load(e->data, NULL));
+	BrowserView_Active(e->data, BrowserView_Load(e->data, "/"));
 }
 
 static void BrowserView_OnInit(LCUI_Widget w)
@@ -47,7 +47,6 @@ static void BrowserView_OnInit(LCUI_Widget w)
 	Widget_Append(self->tabbar, self->btn_add);
 	Widget_Append(w, self->tabbar);
 	Widget_BindEvent(self->btn_add, "click", BrowserView_OnBtnAddTabClick, w, NULL);
-	BrowserView_Load(w, NULL);
 }
 
 static void BrowserView_OnDestroy(LCUI_Widget w)

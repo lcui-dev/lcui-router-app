@@ -1,12 +1,17 @@
 module.exports = [
   {
-    name: 'frame#welcome',
-    path: 'welcome',
+    name: 'home',
+    path: '/',
+    component: 'home'
+  },
+  {
+    name: 'welcome',
+    path: '/welcome',
     component: 'welcome'
   },
   {
-    name: 'frame#about',
-    path: 'about',
+    name: 'about',
+    path: '/about',
     component: 'about'
   },
   {

@@ -1,32 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <lcui-app>
   <ui>
-    <home>
-      <w class="nav nav-tabs d-flex justify-content-center" ref="tabs">
-        <w class="nav-item">
-          <text class="nav-link active" data-toggle="tab" data-target="preview">Preview</text>
-        </w>
-        <w class="nav-item">
-          <text class="nav-link" data-toggle="tab" data-target="about">About</text>
-        </w>
-        <w class="bav-tabs-bottom" />
-      </w>
-      <w class="tab-content" ref="tab-content">
-        <w class="tab-pane active" id="preview">
-          <resource type="text/xml" src="assets/views/preview.xml" />
-        </w>
-        <w class="tab-pane" id="about">
-          <w class="about-container">
-            <about />
-            <w class="input-group">
-              <textview>Enter a message and save it.</textview>
-              <textedit ref="input-message" placeholder="eg: hello, world!" />
-              <button ref="btn-save-message">Save</button>
-              <textview ref="feedback" class="feedback">Message has been saved!</textview>
-            </w>
-          </w>
-        </w>
-      </w>
-    </home>
+    <w class="v-home__cards container d-flex justify-content-center">
+      <router-link class="v-home__card" to="/welcome">
+        <icon class="v-home__card-icon text-pink" name="emoticon-cool-outline" />
+        <text class="v-home__card-title">Welcome!</text>
+      </router-link>
+    </w>
   </ui>
 </lcui-app>

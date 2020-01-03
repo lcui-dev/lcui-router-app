@@ -1,66 +1,38 @@
 .v-home {
-  .nav-tabs {
-    border-bottom: 0;
-    padding-top: 10px;
-    margin-bottom: 20px;
-    background-color: #f8f9fa;
 
-    .nav-item {
-      z-index: 1;
-      position: relative;
-    }
-    .nav-link {
-      color: #007bff;
+}
 
-      &:hover {
-        border-top-color: #e9ecef;
-        border-right-color: #e9ecef;
-        border-bottom-color: #dee2e6;
-        border-left-color: #e9ecef;
-      }
-      &.active {
-        color: $primary-text-color;
-        border-top-color: #dee2e6;
-        border-right-color: #dee2e6;
-        border-bottom-color: #fff;
-        border-left-color: #dee2e6;
-      }
-    }
+.v-home__card-icon {
+  display: block;
+  width: $home-card-icon-size;
+  height: $home-card-icon-size;
+  border-radius: $home-card-icon-size / 2;
+  background-color: $home-card-icon-bg;
+  line-height: $home-card-icon-size;
+  font-size: $home-card-icon-size / 2;
+  text-align: center;
+  margin: 0 auto $home-card-spacing auto;
+}
+
+.v-home__card-title {
+  display: block;
+  text-align: center;
+  line-height: $home-card-title-line-height;
+}
+
+.v-home__card {
+  width: $home-card-width;
+  padding-top: $home-card-spacing;
+  margin-bottom: $home-card-spacing;
+  display: inline-block;
+  border-radius: $border-radius;
+
+  &:hover {
+    background-color: $home-card-bg-hover;
   }
+}
 
-  .bav-tabs-bottom {
-    border-bottom: 1px solid #dee2e6;
-  }
-
-  .nav-item {
-    display: inline-block;
-  }
-
-  .tab-pane {
-    display: none;
-
-    &.active {
-      display: block;
-    }
-  }
-
-  .about-container {
-    width: 100%;
-    max-width: 680px;
-    margin: 15px auto;
-  }
-  .input-group {
-    padding: 5px;
-    margin: -5px -5px 5px -5px;
-
-    textview {
-      display: block;
-      margin-bottom: 10px;
-    }
-    .feedback {
-      color: $green;
-      font-size: 12px;
-      margin-top: 5px;
-    }
-  }
+.v-home__cards {
+  padding-top: 16px;
+  vertical-align: middle;
 }

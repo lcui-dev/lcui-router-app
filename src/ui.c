@@ -22,7 +22,7 @@ int UI_Init(void)
 	}
 	root = LCUIWidget_GetRoot();
 	browser = LCUIWidget_GetById("browser");
-	BrowserView_Active(browser, BrowserView_Load(browser, NULL));
+	BrowserView_Active(browser, BrowserView_Load(browser, "/"));
 	Widget_SetTitleW(root, L"Browser demo");
 	Widget_Append(root, wrapper);
 	Widget_Unwrap(wrapper);
