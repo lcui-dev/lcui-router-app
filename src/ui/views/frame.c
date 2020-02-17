@@ -5,6 +5,7 @@
 #include <LCUI/timer.h>
 #include <LCUI/gui/widget.h>
 #include <LCUI/gui/widget/textedit.h>
+#include <LCUI/gui/widget/scrollbar.h>
 #include "frame.h"
 #include "router.h"
 
@@ -19,6 +20,9 @@ typedef struct FrameViewRec_ {
 	LCUI_Widget btn_home;
 	LCUI_Widget input;
 	LCUI_Widget content;
+	LCUI_Widget client;
+	LCUI_Widget vscrollbar;
+	LCUI_Widget hscrollbar;
 } FrameViewRec, *FrameView;
 
 static size_t frame_id_count = 0;
@@ -105,19 +109,30 @@ static void FrameView_OnInit(LCUI_Widget w)
 	self->btn_refresh = LCUIWidget_New("icon");
 	self->input = LCUIWidget_New("textedit");
 	self->content = LCUIWidget_New("router-view");
+	self->client = LCUIWidget_New(NULL);
+	self->vscrollbar = LCUIWidget_New("scrollbar");
+	//self->hscrollbar = LCUIWidget_New("scrollbar");
+	//ScrollBar_BindTarget(self->hscrollbar, self->content);
+	ScrollBar_BindTarget(self->vscrollbar, self->content);
+	//ScrollBar_SetDirection(self->hscrollbar, SBD_HORIZONTAL);
 	Widget_SetAttribute(w, "router", router_name);
 	Widget_AddClass(w, "v-frame");
-	Widget_AddClass(self->navbar, "c-navbar");
+	Widget_AddClass(self->navbar, "c-navbar v-frame__navbar");
 	Widget_AddClass(self->btn_back, "c-navbar__btn");
 	Widget_AddClass(self->btn_forward, "c-navbar__btn");
 	Widget_AddClass(self->btn_home, "c-navbar__btn");
 	Widget_AddClass(self->btn_refresh, "c-navbar__btn");
 	Widget_AddClass(self->input, "c-navbar__input");
+	Widget_AddClass(self->content, "v-frame__content");
+	Widget_AddClass(self->client, "v-frame__client");
 	Widget_Append(self->navbar, self->btn_back);
 	Widget_Append(self->navbar, self->btn_forward);
 	Widget_Append(self->navbar, self->btn_refresh);
 	Widget_Append(self->navbar, self->btn_home);
 	Widget_Append(self->navbar, self->input);
+	Widget_Append(self->client, self->content);
+	Widget_Append(self->client, self->vscrollbar);
+	//Widget_Append(self->client, self->hscrollbar);
 	Icon_SetName(self->btn_back, "arrow-left");
 	Icon_SetName(self->btn_forward, "arrow-right");
 	Icon_SetName(self->btn_refresh, "refresh");
@@ -129,7 +144,7 @@ static void FrameView_OnInit(LCUI_Widget w)
 	Widget_BindEvent(self->btn_home, "click", FrameView_OnBtnHomeClick,
 			 self, NULL);
 	Widget_Append(w, self->navbar);
-	Widget_Append(w, self->content);
+	Widget_Append(w, self->client);
 	FrameView_OnRouteUpdate(w, router_get_current_route(self->router),
 				NULL);
 }

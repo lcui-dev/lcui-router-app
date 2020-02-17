@@ -1,8 +1,13 @@
 .v-browser {
-
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .v-browser__tabbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-start;
   background-color: $browser-tabbar-bg;
   padding: 8px 8px 0 8px;
 }
@@ -15,6 +20,7 @@
   margin-left: 10px;
   text-align: center;
   margin-top: 4px;
+  flex: 0 0 auto;
 
   &:hover {
     background-color: $browser-btn-add-tab-bg-hover;

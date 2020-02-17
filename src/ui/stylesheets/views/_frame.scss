@@ -1,2 +1,17 @@
 .v-frame {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.v-frame__navbar {
+  flex: 0 0 auto;
+}
+
+.v-frame__client {
+  flex: 1 1 auto;
+}
+
+.v-frame__content {
+  min-height: 100%;
 }

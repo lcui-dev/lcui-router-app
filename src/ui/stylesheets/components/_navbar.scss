@@ -1,9 +1,11 @@
 .c-navbar {
+  display: flex;
   padding: 5px 8px;
   border-bottom: 1px solid $border-color;
 }
 
 .c-navbar__btn {
+  flex: 0 0 auto;
   height: 28px;
   min-width: 28px;
   line-height: 28px;
@@ -33,6 +35,7 @@
   border: 0;
   border-radius: 14px;
   background-color: $navbar-input-bg;
+  flex: 1 1 auto;
 
   &:hover {
     background-color: $navbar-input-bg-hover;
