@@ -15,6 +15,15 @@ module.exports = [
     component: 'help'
   },
   {
+    path: '/file',
+    component: 'file'
+  },
+  {
+    name: 'file',
+    path: '/file/*',
+    component: 'file'
+  },
+  {
     path: '*',
     component: 'notfound'
   }

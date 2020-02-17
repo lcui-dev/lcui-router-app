@@ -6,6 +6,10 @@
         <icon class="v-home__card-icon text-pink" name="emoticon-cool-outline" />
         <text class="v-home__card-title">Welcome!</text>
       </router-link>
+      <router-link class="v-home__card" to="/file">
+        <icon class="v-home__card-icon text-orange" name="folder-search" />
+        <text class="v-home__card-title">File</text>
+      </router-link>
       <router-link class="v-home__card" to="/help">
         <icon class="v-home__card-icon text-blue" name="help-box" />
         <text class="v-home__card-title">About</text>

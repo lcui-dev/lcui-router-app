@@ -6,9 +6,13 @@
 #include "views/welcome.h"
 #include "views/home.h"
 #include "views/help.h"
+#include "views/file.h"
+#include "views/notfound.h"
 
 void UI_InitViews(void)
 {
+	UI_InitNotfoundView();
+	UI_InitFileView();
 	UI_InitHelpView();
 	UI_InitHomeView();
 	UI_InitWelcomeView();

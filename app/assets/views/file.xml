@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<lcui-app>
+  <ui>
+    <w class="container">
+      <h1 ref="header" class="v-file__header">Directory listing for /</h1>
+      <w ref="body" class="v-file__body" />
+    </w>
+  </ui>
+</lcui-app>

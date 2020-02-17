@@ -10,7 +10,7 @@ int UI_Init(void)
 {
 	LCUI_Widget root;
 	LCUI_Widget wrapper;
-    LCUI_Widget browser;
+	LCUI_Widget browser;
 
 	LCUI_Init();
 	LCDesign_Init();

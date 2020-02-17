@@ -1,0 +1,62 @@
+.v-file {
+
+}
+
+.v-file__body {
+  margin: 0 -5px 0 -5px;
+}
+
+.c-file-list-item__left {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.c-file-list-item__name {
+  flex: 1 1 auto;
+}
+
+.c-file-list-item__link {
+  display: inline-block;
+}
+
+router-link.c-file-list-item__link {
+  color: $primary;
+
+  &:hover {
+    color: lighten($primary, 10);
+  }
+  &:active {
+    color: darken($primary, 10);
+  }
+}
+
+.c-file-list-item__icon {
+  margin-right: 5px;
+  flex: 0 0 auto;
+}
+
+.c-file-list-item__size {
+  flex: 0 0 auto;
+  width: 100px;
+}
+
+.c-file-list-item__date {
+  flex: 0 0 auto;
+  text-align: right;
+  width: 180px;
+}
+
+.c-file-list-item {
+  display: flex;
+  padding: 5px;
+
+  &:hover {
+    background-color: rgba($primary, 0.05);
+  }
+
+  &.is-folder {
+    .c-file-list-item__icon {
+      color: $orange;
+    }
+  }
+}

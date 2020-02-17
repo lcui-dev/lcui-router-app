@@ -10,7 +10,8 @@
       <w class="row">
         <w class="col col-6">
           <w class="buttons-wrapper mb-4">
-            <p>LCUI is a freely available software library for building user interfaces. It is written in C and supports the use of XML and CSS to describe the graphical interface of simple desktop apps.</p>
+            <h3>LCUI</h3>
+            <p>A freely available software library for building user interfaces. It is written in C and supports the use of XML and CSS to describe the graphical interface of simple desktop apps.</p>
             <a class="btn btn-outline-primary" href="https://github.com/lc-soft/LCUI">
               See more
             </a>
@@ -18,8 +19,29 @@
         </w>
         <w class="col col-6">
           <w class="buttons-wrapper">
-            <p>LCUI Router is the official router for LCUI. It provides a similar development experience to the Vue Router and make building multiple views applications with LCUI a breeze.</p>
+            <h3>LCUI Router</h3>
+            <p>The official router for LCUI. It provides a similar development experience to the Vue Router and make building multiple views applications with LCUI a breeze.</p>
             <a class="btn btn-outline-primary" href="https://github.com/lc-soft/lcui-router">
+              See more
+            </a>
+          </w>
+        </w>
+      </w>
+      <w class="row">
+        <w class="col col-6">
+          <w class="buttons-wrapper mb-4">
+            <h3>LC Design</h3>
+            <p>A UI component framework for building LCUI application, it provides basic styles for typography and elements, simple layout system, CSS components and utilities. Its CSS code is based Bootstrap, so its usage is basically the same as Boostrap.</p>
+            <a class="btn btn-outline-primary" href="https://github.com/lc-ui/lc-design">
+              See more
+            </a>
+          </w>
+        </w>
+        <w class="col col-6">
+          <w class="buttons-wrapper">
+            <h3>LCUI CLI</h3>
+            <p>Command line interface for rapid LCUI development. It providing: mininal LCUI project template, generator for components and views, internationalization (i18n), router config file compilation.</p>
+            <a class="btn btn-outline-primary" href="https://github.com/lc-ui/lcui-cli">
               See more
             </a>
           </w>
