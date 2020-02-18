@@ -19,17 +19,6 @@
   display: inline-block;
 }
 
-router-link.c-file-list-item__link {
-  color: $primary;
-
-  &:hover {
-    color: lighten($primary, 10);
-  }
-  &:active {
-    color: darken($primary, 10);
-  }
-}
-
 .c-file-list-item__icon {
   margin-right: 5px;
   flex: 0 0 auto;
@@ -37,13 +26,13 @@ router-link.c-file-list-item__link {
 
 .c-file-list-item__size {
   flex: 0 0 auto;
-  width: 100px;
+  width: 80px;
 }
 
 .c-file-list-item__date {
   flex: 0 0 auto;
   text-align: right;
-  width: 180px;
+  width: 160px;
 }
 
 .c-file-list-item {
@@ -52,11 +41,31 @@ router-link.c-file-list-item__link {
 
   &:hover {
     background-color: rgba($primary, 0.05);
+
+    router-link.c-file-list-item__link {
+      color: $primary;
+
+      &:hover {
+        color: lighten($primary, 10);
+      }
+      &:active {
+        color: darken($primary, 10);
+      }
+    }
   }
 
   &.is-folder {
     .c-file-list-item__icon {
       color: $orange;
     }
+  }
+}
+
+.c-file-list-header {
+  display: flex;
+  padding: 5px;
+
+  text {
+    font-weight: bold;
   }
 }

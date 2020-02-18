@@ -14,8 +14,10 @@
 typedef struct FileViewTaskRec_ {
 	wchar_t path[1024];
 	LCUI_BOOL active;
+	LCUI_BOOL has_error;
 	LCUI_Widget folders;
 	LCUI_Widget files;
+	size_t count;
 } FileViewTaskRec, *FileViewTask;
 
 typedef struct FileViewRec_ {
@@ -66,7 +68,7 @@ static LCUI_Widget CreateFileItem(const wchar_t *dirname,
 				1023 - dirname_len, ENCODING_ANSI);
 	path[dirname_len + len] = 0;
 	if (stat(path, &file_stat) == 0) {
-		strftime(date_str, 64, "%F %T", localtime(&file_stat.st_ctime));
+		strftime(date_str, 64, "%F %T", localtime(&file_stat.st_mtime));
 		TextView_SetText(date, date_str);
 
 		unit_i = 0;
@@ -94,6 +96,7 @@ static LCUI_Widget CreateFileItem(const wchar_t *dirname,
 		}
 		full_path[2047] = 0;
 		Widget_SetAttribute(link, "to", full_path);
+		Widget_AddClass(item, "is-folder");
 	} else {
 		Icon_SetName(icon, "file-outline");
 		link = LCUIWidget_New("text");
@@ -115,17 +118,38 @@ static LCUI_Widget CreateFileItem(const wchar_t *dirname,
 	return item;
 }
 
-static void FileView_OnLinkFiles(void *arg1, void *arg2)
+static void FileView_OnLoadedFiles(void *arg1, void *arg2)
 {
+	LCUI_Widget message;
+	LCUI_WidgetEventRec e;
+
 	FileViewTask task = arg2;
 	FileView self = Widget_GetData(arg1, file_proto);
 
 	if (task->active) {
-		Widget_Append(self->body, task->folders);
-		Widget_Append(self->body, task->files);
-		Widget_Unwrap(task->folders);
-		Widget_Unwrap(task->files);
+		if (task->has_error) {
+			message = LCUIWidget_New("text");
+			TextView_SetTextW(message,
+					  L"[b][color=#f00]Error:[/color][/b] cannot "
+					  L"read the files in this directory.");
+			Widget_Append(self->body->parent, message);
+		} else if (task->count < 1) {
+			message = LCUIWidget_New("text");
+			TextView_SetTextW(message, L"This directory is empty.");
+			Widget_Append(self->body->parent, message);
+		} else {
+			Widget_Append(self->body, task->folders);
+			Widget_Append(self->body, task->files);
+			Widget_Unwrap(task->folders);
+			Widget_Unwrap(task->files);
+		}
+		LCUI_InitWidgetEvent(&e, "PageLoaded");
+		Widget_TriggerEvent(arg1, &e, NULL);
+	} else {
+		Widget_Destroy(task->files);
+		Widget_Destroy(task->folders);
 	}
+	self->task = NULL;
 	free(task);
 }
 
@@ -142,9 +166,11 @@ static void FileView_OnLoadFiles(void *arg1, void *arg2)
 		free(t);
 		return;
 	}
-		if (LCUI_OpenDirW(t->path, &dir) != 0) {
-			return;
-		}
+	if (LCUI_OpenDirW(t->path, &dir) != 0) {
+		t->has_error = TRUE;
+		LCUI_PostSimpleTask(FileView_OnLoadedFiles, arg1, t);
+		return;
+	}
 	t->folders = LCUIWidget_New(NULL);
 	t->files = LCUIWidget_New(NULL);
 	while ((entry = LCUI_ReadDirW(&dir))) {
@@ -157,6 +183,7 @@ static void FileView_OnLoadFiles(void *arg1, void *arg2)
 				continue;
 			}
 		}
+		t->count++;
 		if (LCUI_FileIsDirectory(entry)) {
 			Widget_Append(t->folders,
 				      CreateFileItem(t->path, name, TRUE));
@@ -170,7 +197,7 @@ static void FileView_OnLoadFiles(void *arg1, void *arg2)
 		free(t);
 		return;
 	}
-	LCUI_PostSimpleTask(FileView_OnLinkFiles, arg1, t);
+	LCUI_PostSimpleTask(FileView_OnLoadedFiles, arg1, t);
 }
 
 static void FileView_OnReady(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
@@ -201,14 +228,16 @@ static void FileView_OnReady(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
 	router = router_get_by_name(name);
 	route = router_get_current_route(router);
 	self->task = malloc(sizeof(FileViewTaskRec));
+	self->task->count = 0;
 	self->task->active = TRUE;
+	self->task->has_error = FALSE;
 	self->header = Dict_FetchValue(refs, "header");
 	self->body = Dict_FetchValue(refs, "body");
 	path = router_route_get_param(route, "pathMatch");
 	if (path) {
 		LCUI_DecodeUTF8String(self->task->path, path, 1023);
 		self->task->path[1023] = 0;
-		swprintf(header_str, 1023, L"Directory listing for %s",
+		swprintf(header_str, 1023, L"Directory listing for /%s",
 			 self->task->path);
 		header_str[1023] = 0;
 	} else {
@@ -217,6 +246,7 @@ static void FileView_OnReady(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
 		wcscpy(header_str, L"Directory listing for /");
 	}
 	TextView_SetTextW(self->header, header_str);
+	Widget_SetTitleW(w, header_str);
 	task.arg[0] = w;
 	task.arg[1] = self->task;
 	task.destroy_arg[0] = NULL;

@@ -3,7 +3,14 @@
   <ui>
     <w class="container">
       <h1 ref="header" class="v-file__header">Directory listing for /</h1>
-      <w ref="body" class="v-file__body" />
+      <hr />
+      <w ref="body" class="v-file__body">
+        <w class="c-file-list-header">
+          <text class="c-file-list-item__name">Name</text>
+          <text class="c-file-list-item__size">Size</text>
+          <text class="c-file-list-item__date">Modified time</text>
+        </w>
+      </w>
     </w>
   </ui>
 </lcui-app>
