@@ -25,7 +25,8 @@ typedef struct BrowserViewRec_ {
 
 static LCUI_WidgetPrototype browser_proto;
 
-static void BrowserView_OnBtnAddTabClick(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
+static void BrowserView_OnBtnAddTabClick(LCUI_Widget w, LCUI_WidgetEvent e,
+					 void *arg)
 {
 	BrowserView_Active(e->data, BrowserView_Load(e->data, "/"));
 }
@@ -46,7 +47,8 @@ static void BrowserView_OnInit(LCUI_Widget w)
 	Widget_AddClass(self->tabbar, "v-browser__tabbar");
 	Widget_Append(self->tabbar, self->btn_add);
 	Widget_Append(w, self->tabbar);
-	Widget_BindEvent(self->btn_add, "click", BrowserView_OnBtnAddTabClick, w, NULL);
+	Widget_BindEvent(self->btn_add, "click", BrowserView_OnBtnAddTabClick,
+			 w, NULL);
 }
 
 static void BrowserView_OnDestroy(LCUI_Widget w)
@@ -92,7 +94,11 @@ static void BrowserView_OnPageLoaded(LCUI_Widget w, LCUI_WidgetEvent e,
 	page = e->data;
 	page->title[255] = 0;
 	page->loading = FALSE;
-	wcsncpy(page->title, e->target->title, 255);
+	if (e->target->title) {
+		wcsncpy(page->title, e->target->title, 255);
+	} else {
+		wcscpy(page->title, L"Untitled Page");
+	}
 	FrameTab_SetLoading(page->tab, page->loading);
 	FrameTab_SetTextW(page->tab, page->title);
 }
