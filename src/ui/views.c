@@ -11,7 +11,7 @@
 
 void UI_InitViews(void)
 {
-	UI_InitNotfoundView();
+	UI_InitNotFoundView();
 	UI_InitFileView();
 	UI_InitHelpView();
 	UI_InitHomeView();

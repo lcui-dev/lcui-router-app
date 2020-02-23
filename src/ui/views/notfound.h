@@ -1,1 +1,1 @@
-extern void UI_InitNotfoundView(void);
+extern void UI_InitNotFoundView(void);

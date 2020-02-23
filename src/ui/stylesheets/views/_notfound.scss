@@ -1,3 +1,28 @@
 .v-notfound {
+  display: flex;
+  min-height: 100%;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding-bottom: 20px;
 
+  icon {
+    color: $red;
+    font-size: 80px;
+  }
+
+  .btn {
+    margin-top: 20px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p, h1 {
+      text-align: center;
+    }
+  }
 }

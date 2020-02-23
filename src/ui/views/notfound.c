@@ -1,45 +1,37 @@
 #include <LCUI.h>
 #include <LCUI/gui/widget.h>
-#include "notfound.h"
-
-typedef struct NotfoundViewRec_ {
-	int this_is_example_data;
-	// Your view data
-	// ...
-} NotfoundViewRec, *NotfoundView;
+#include <LCUI/gui/builder.h>
+#include <LCUI/timer.h>
+#include "home.h"
 
 static LCUI_WidgetPrototype notfound_proto;
 
-static NotfoundView_OnReady(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
+static void NotFoundView_OnTimer(void *arg)
 {
-	NotfoundView self;
+	LCUI_WidgetEventRec e;
 
-	self = Widget_GetData(w, notfound_proto);
-	// Do something after this view is ready
-	// ...
-	Widget_UnbindEvent(w, "ready", NotfoundView_OnReady);
+	LCUI_InitWidgetEvent(&e, "PageLoaded");
+	e.cancel_bubble = FALSE;
+	Widget_TriggerEvent(arg, &e, NULL);
 }
 
-static void NotfoundView_OnInit(LCUI_Widget w)
+static void NotFoundView_OnInit(LCUI_Widget w)
 {
-	NotfoundView self;
+	LCUI_Widget wrapper;
 
-	self = Widget_AddData(w, notfound_proto, sizeof(NotfoundViewRec));
-	self->this_is_example_data = 32;
+	wrapper = LCUIBuilder_LoadFile("assets/views/notfound.xml");
+	if (wrapper) {
+		Widget_Append(w, wrapper);
+		Widget_Unwrap(wrapper);
+	}
+	Widget_AddData(w, notfound_proto, 0);
 	Widget_AddClass(w, "v-notfound");
-	Widget_BindEvent(w, "ready", NotfoundView_OnReady, NULL, NULL);
+	Widget_SetTitleW(w, L"Not Found!");
+	LCUI_SetTimeout(0, NotFoundView_OnTimer, w);
 }
 
-static void NotfoundView_OnDestroy(LCUI_Widget w)
-{
-	NotfoundView self;
-
-	self = Widget_GetData(w, notfound_proto);
-}
-
-void UI_InitNotfoundView(void)
+void UI_InitNotFoundView(void)
 {
 	notfound_proto = LCUIWidget_NewPrototype("notfound", NULL);
-	notfound_proto->init = NotfoundView_OnInit;
-	notfound_proto->destroy = NotfoundView_OnDestroy;
+	notfound_proto->init = NotFoundView_OnInit;
 }

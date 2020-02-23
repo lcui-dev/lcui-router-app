@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <lcui-app>
   <ui>
-    <notfound>
-      <textview>notfound</textview>
-    </notfound>
+    <w class="container">
+      <icon name="file-remove" />
+      <h1>404</h1>
+      <p>Sorry, the page you visited does not exist.</p>
+      <router-link to="/welcome" class="btn btn-primary">Back Home</router-link>
+    </w>
   </ui>
 </lcui-app>
