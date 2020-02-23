@@ -4,6 +4,7 @@
 #include <LCUI/input.h>
 #include <LCUI/timer.h>
 #include <LCUI/gui/widget.h>
+#include <LCUI/gui/widget/textview.h>
 #include <LCUI/gui/widget/textedit.h>
 #include <LCUI/gui/widget/scrollbar.h>
 #include "frame.h"
@@ -18,11 +19,12 @@ typedef struct FrameViewRec_ {
 	LCUI_Widget btn_forward;
 	LCUI_Widget btn_refresh;
 	LCUI_Widget btn_home;
+	LCUI_Widget btn_menu;
 	LCUI_Widget input;
 	LCUI_Widget content;
 	LCUI_Widget client;
 	LCUI_Widget scrollbar;
-	LCUI_Widget hscrollbar;
+	LCUI_Widget dropdown;
 } FrameViewRec, *FrameView;
 
 static size_t frame_id_count = 0;
@@ -131,6 +133,61 @@ static void FrameView_OnRouteUpdate(void *arg, const router_route_t *to,
 	Widget_TriggerEvent(arg, &e, NULL);
 }
 
+static void FrameView_OnCommandOpenNewTab(LCUI_Widget w, LCUI_WidgetEvent e,
+					  void *arg)
+{
+	LCUI_WidgetEventRec ev;
+
+	LCUI_InitWidgetEvent(&ev, "command.OpenNewTab");
+	Widget_TriggerEvent(e->data, &ev, NULL);
+}
+
+static void FrameView_OnCommandQuit(LCUI_Widget w, LCUI_WidgetEvent e,
+				    void *arg)
+{
+	LCUI_WidgetEventRec ev;
+
+	LCUI_InitWidgetEvent(&ev, "command.Quit");
+	Widget_TriggerEvent(e->data, &ev, NULL);
+}
+
+static void FrameView_OnOpenHelp(LCUI_Widget w, LCUI_WidgetEvent e, void *arg)
+{
+	FrameView_Load(e->data, "/help");
+}
+
+static void FrameView_InitDropdownMenu(LCUI_Widget w)
+{
+	FrameView self;
+	LCUI_Widget item;
+
+	self = Widget_GetData(w, frame_proto);
+	Dropdown_BindTarget(self->dropdown, self->btn_menu);
+	Dropdown_SetPosition(self->dropdown, SV_BOTTOM_RIGHT);
+
+	item = LCUIWidget_New("text");
+	Widget_AddClass(item, "dropdown-item");
+	TextView_SetTextW(item, L"Open New Tab");
+	Widget_BindEvent(item, "click", FrameView_OnCommandOpenNewTab, w, NULL);
+	Widget_Append(self->dropdown, item);
+
+	item = LCUIWidget_New("text");
+	Widget_AddClass(item, "dropdown-item");
+	TextView_SetTextW(item, L"Help");
+	Widget_BindEvent(item, "click", FrameView_OnOpenHelp, w, NULL);
+	Widget_Append(self->dropdown, item);
+
+	item = LCUIWidget_New(NULL);
+	Widget_AddClass(item, "dropdown-divider");
+	Widget_Append(self->dropdown, item);
+
+	item = LCUIWidget_New("text");
+	Widget_AddClass(item, "dropdown-item");
+	TextView_SetTextW(item, L"Quit");
+	Widget_BindEvent(item, "click", FrameView_OnCommandQuit, w, NULL);
+	Widget_Append(self->dropdown, item);
+}
+
 static void FrameView_OnInit(LCUI_Widget w)
 {
 	FrameView self;
@@ -150,6 +207,8 @@ static void FrameView_OnInit(LCUI_Widget w)
 	self->content = LCUIWidget_New("router-view");
 	self->client = LCUIWidget_New(NULL);
 	self->scrollbar = LCUIWidget_New("scrollbar");
+	self->btn_menu = LCUIWidget_New("icon");
+	self->dropdown = LCUIWidget_New("dropdown-menu");
 	ScrollBar_BindTarget(self->scrollbar, self->content);
 	Widget_SetAttribute(w, "router", router_name);
 	Widget_AddClass(w, "v-frame");
@@ -158,6 +217,7 @@ static void FrameView_OnInit(LCUI_Widget w)
 	Widget_AddClass(self->btn_forward, "c-navbar__btn");
 	Widget_AddClass(self->btn_home, "c-navbar__btn");
 	Widget_AddClass(self->btn_refresh, "c-navbar__btn");
+	Widget_AddClass(self->btn_menu, "c-navbar__btn");
 	Widget_AddClass(self->input, "c-navbar__input");
 	Widget_AddClass(self->content, "v-frame__content");
 	Widget_AddClass(self->client, "v-frame__client");
@@ -166,8 +226,10 @@ static void FrameView_OnInit(LCUI_Widget w)
 	Widget_Append(self->navbar, self->btn_refresh);
 	Widget_Append(self->navbar, self->btn_home);
 	Widget_Append(self->navbar, self->input);
+	Widget_Append(self->navbar, self->btn_menu);
 	Widget_Append(self->client, self->content);
 	Widget_Append(self->client, self->scrollbar);
+	Icon_SetName(self->btn_menu, "menu");
 	Icon_SetName(self->btn_back, "arrow-left");
 	Icon_SetName(self->btn_forward, "arrow-right");
 	Icon_SetName(self->btn_refresh, "refresh");
@@ -180,10 +242,13 @@ static void FrameView_OnInit(LCUI_Widget w)
 			 self, NULL);
 	Widget_BindEvent(self->btn_refresh, "click",
 			 FrameView_OnBtnRefreshClick, self, NULL);
-	Widget_BindEvent(self->input, "keydown", FrameView_OnInputKeydown, self, NULL);
+	Widget_BindEvent(self->input, "keydown", FrameView_OnInputKeydown, self,
+			 NULL);
 	Widget_Append(w, self->navbar);
 	Widget_Append(w, self->client);
+	Widget_Append(w, self->dropdown);
 	Widget_SetId(w, router_name);
+	FrameView_InitDropdownMenu(w);
 	FrameView_OnRouteUpdate(w, router_get_current_route(self->router),
 				NULL);
 }

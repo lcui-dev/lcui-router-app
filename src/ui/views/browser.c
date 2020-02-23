@@ -64,6 +64,9 @@ static void BrowserView_OnPageTabClick(LCUI_Widget w, LCUI_WidgetEvent e,
 {
 	Page page;
 
+	if (Widget_HasClass(e->target, "c-frame-tab__close")) {
+		return;
+	}
 	page = e->data;
 	BrowserView_Active(page->browser, page->id);
 }
@@ -103,6 +106,18 @@ static void BrowserView_OnPageLoaded(LCUI_Widget w, LCUI_WidgetEvent e,
 	FrameTab_SetTextW(page->tab, page->title);
 }
 
+static void BrowserView_OnCommandQuit(LCUI_Widget w, LCUI_WidgetEvent e,
+				      void *arg)
+{
+	LCUI_Quit();
+}
+
+static void BrowserView_OnCommandOpenNewTab(LCUI_Widget w, LCUI_WidgetEvent e,
+					    void *arg)
+{
+	BrowserView_Active(e->data, BrowserView_Load(e->data, "/"));
+}
+
 int BrowserView_Load(LCUI_Widget w, const char *path)
 {
 	Page page;
@@ -133,6 +148,10 @@ int BrowserView_Load(LCUI_Widget w, const char *path)
 			 NULL);
 	Widget_BindEvent(page->frame, "PageLoaded", BrowserView_OnPageLoaded,
 			 page, NULL);
+	Widget_BindEvent(page->frame, "command.OpenNewTab",
+			 BrowserView_OnCommandOpenNewTab, w, NULL);
+	Widget_BindEvent(page->frame, "command.Quit", BrowserView_OnCommandQuit,
+			 w, NULL);
 	LinkedList_AppendNode(&self->pages, &page->node);
 	FrameView_Load(page->frame, path);
 	return page->id;
