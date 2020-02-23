@@ -1,7 +1,7 @@
-
 #include <stdio.h>
 #include <LCUI.h>
 #include <LCDesign.h>
+#include <LCUI/input.h>
 #include <LCUI/timer.h>
 #include <LCUI/gui/widget.h>
 #include <LCUI/gui/widget/textedit.h>
@@ -21,7 +21,7 @@ typedef struct FrameViewRec_ {
 	LCUI_Widget input;
 	LCUI_Widget content;
 	LCUI_Widget client;
-	LCUI_Widget vscrollbar;
+	LCUI_Widget scrollbar;
 	LCUI_Widget hscrollbar;
 } FrameViewRec, *FrameView;
 
@@ -57,13 +57,25 @@ static void BrowserView_UpdateNavbar(void *arg)
 static void FrameView_OnBtnBackClick(LCUI_Widget w, LCUI_WidgetEvent e,
 				     void *arg)
 {
+	if (w->disabled) {
+		return;
+	}
 	router_back(((FrameView)e->data)->router);
 }
 
 static void FrameView_OnBtnForwardClick(LCUI_Widget w, LCUI_WidgetEvent e,
-				     void *arg)
+					void *arg)
 {
+	if (w->disabled) {
+		return;
+	}
 	router_forward(((FrameView)e->data)->router);
+}
+
+static void FrameView_OnBtnRefreshClick(LCUI_Widget w, LCUI_WidgetEvent e,
+					void *arg)
+{
+	router_go(((FrameView)e->data)->router, 0);
 }
 
 static void FrameView_OnBtnHomeClick(LCUI_Widget w, LCUI_WidgetEvent e,
@@ -78,11 +90,36 @@ static void FrameView_OnBtnHomeClick(LCUI_Widget w, LCUI_WidgetEvent e,
 	router_location_destroy(location);
 }
 
+static void FrameView_OnInputKeydown(LCUI_Widget w, LCUI_WidgetEvent e,
+				     void *arg)
+{
+	char *path;
+	size_t len;
+	wchar_t raw_path[1024];
+	router_location_t *location;
+	FrameView self;
+
+	if (e->key.code != LCUI_KEY_ENTER) {
+		return;
+	}
+	self = e->data;
+	len = TextEdit_GetTextW(self->input, 0, 1023, raw_path);
+	raw_path[len] = 0;
+	len = LCUI_EncodeUTF8String(NULL, raw_path, 1023);
+	path = malloc(len * (sizeof(char) + 1));
+	len = LCUI_EncodeUTF8String(path, raw_path, 1023);
+	path[len] = 0;
+	location = router_location_create(NULL, path);
+	router_push(self->router, location);
+	router_location_destroy(location);
+}
+
 static void FrameView_OnRouteUpdate(void *arg, const router_route_t *to,
 				    const router_route_t *from)
 {
 	const char *path;
 	FrameView self;
+	LCUI_WidgetEventRec e;
 
 	self = Widget_GetData(arg, frame_proto);
 	if (to) {
@@ -90,6 +127,8 @@ static void FrameView_OnRouteUpdate(void *arg, const router_route_t *to,
 		TextEdit_SetText(self->input, path);
 	}
 	LCUI_SetTimeout(0, BrowserView_UpdateNavbar, arg);
+	LCUI_InitWidgetEvent(&e, "PageLoad");
+	Widget_TriggerEvent(arg, &e, NULL);
 }
 
 static void FrameView_OnInit(LCUI_Widget w)
@@ -110,11 +149,8 @@ static void FrameView_OnInit(LCUI_Widget w)
 	self->input = LCUIWidget_New("textedit");
 	self->content = LCUIWidget_New("router-view");
 	self->client = LCUIWidget_New(NULL);
-	self->vscrollbar = LCUIWidget_New("scrollbar");
-	//self->hscrollbar = LCUIWidget_New("scrollbar");
-	//ScrollBar_BindTarget(self->hscrollbar, self->content);
-	ScrollBar_BindTarget(self->vscrollbar, self->content);
-	//ScrollBar_SetDirection(self->hscrollbar, SBD_HORIZONTAL);
+	self->scrollbar = LCUIWidget_New("scrollbar");
+	ScrollBar_BindTarget(self->scrollbar, self->content);
 	Widget_SetAttribute(w, "router", router_name);
 	Widget_AddClass(w, "v-frame");
 	Widget_AddClass(self->navbar, "c-navbar v-frame__navbar");
@@ -131,20 +167,23 @@ static void FrameView_OnInit(LCUI_Widget w)
 	Widget_Append(self->navbar, self->btn_home);
 	Widget_Append(self->navbar, self->input);
 	Widget_Append(self->client, self->content);
-	Widget_Append(self->client, self->vscrollbar);
-	//Widget_Append(self->client, self->hscrollbar);
+	Widget_Append(self->client, self->scrollbar);
 	Icon_SetName(self->btn_back, "arrow-left");
 	Icon_SetName(self->btn_forward, "arrow-right");
 	Icon_SetName(self->btn_refresh, "refresh");
 	Icon_SetName(self->btn_home, "home-outline");
 	Widget_BindEvent(self->btn_back, "click", FrameView_OnBtnBackClick,
 			 self, NULL);
-	Widget_BindEvent(self->btn_forward, "click", FrameView_OnBtnForwardClick,
-			 self, NULL);
+	Widget_BindEvent(self->btn_forward, "click",
+			 FrameView_OnBtnForwardClick, self, NULL);
 	Widget_BindEvent(self->btn_home, "click", FrameView_OnBtnHomeClick,
 			 self, NULL);
+	Widget_BindEvent(self->btn_refresh, "click",
+			 FrameView_OnBtnRefreshClick, self, NULL);
+	Widget_BindEvent(self->input, "keydown", FrameView_OnInputKeydown, self, NULL);
 	Widget_Append(w, self->navbar);
 	Widget_Append(w, self->client);
+	Widget_SetId(w, router_name);
 	FrameView_OnRouteUpdate(w, router_get_current_route(self->router),
 				NULL);
 }
@@ -161,13 +200,9 @@ static void FrameView_OnDestroy(LCUI_Widget w)
 void FrameView_Load(LCUI_Widget w, const char *path)
 {
 	router_location_t *location;
-
 	FrameView self;
-	LCUI_WidgetEventRec e;
 
 	Widget_Update(w);
-	LCUI_InitWidgetEvent(&e, "PageLoad");
-	Widget_TriggerEvent(w, &e, NULL);
 	location = router_location_create(NULL, path);
 	self = Widget_GetData(w, frame_proto);
 	router_push(self->router, location);
