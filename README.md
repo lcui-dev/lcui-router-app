@@ -1,8 +1,10 @@
-# lc-router-app
+# lcui-router-app
 
 (**English**/[中文](README.zh-cn.md))
 
-**Clone and run for a quick way to see LCUI Router in action.**
+A very simple browser-like application to show the LCUI and LCUI Router features.
+
+[![Screenshot](./screenshot.gif "Screenshot")](./screenshot.gif)
 
 ## To Use
 
@@ -21,10 +23,10 @@ From your command line:
 
 ```shell
 # Clone this repository
-git clone https://github.com/lc-ui/lc-router-app
+git clone https://github.com/lc-ui/lcui-router-app
 
 # Go into the repository
-cd lc-router-app
+cd lcui-router-app
 
 # Install NodeJS dependencies
 npm install
@@ -43,13 +45,16 @@ lcpkg run start --mode debug
 - Configuration files for [CMake](https://cmake.org/) and [XMake](https://xmake.io/) build tools, You can choose one of them that you like.
 - Simple data storage implementation in `src/lib/store.c`.
 - [.scss](https://sass-lang.com/guide) files for describe the user interface style.
-- `about` component for display app infomation.
-- `home` view that implements simple layout and interaction.
+- Implementation of the browser's graphical interface.
+- Welcome page, about page, file page, 404 page, new tab page.
+- Example for the routing navigation of the [LCUI Router](https://github.com/lc-soft/lcui-router).
+- Examples of use of the [LC Design](https://github.com/lc-ui/lc-design) component library.
 
 ## Project Structure
 
 - **`app`**: contains the resource files required for the application to run. You can use it as the working directory of the application, and when you publish your application, you only need to package the files in that directory.
 - **`build`**: contains build tool output files.
+- **`config/router.js`**: Configuration file for the LCUI Router, it can be compiled into a `src/lib/router.c` file using the `lcui compile router` command.
 - **`scripts`**: contains build-related scripts and configuration files.
 - **`src`**: contains the source code.
   - **`ui`**: contains source code related to the user interface.

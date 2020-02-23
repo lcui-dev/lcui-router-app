@@ -1,8 +1,10 @@
-# lc-design-app
+# lcui-router-app
 
 ([English](README.md)/**中文**)
 
-**克隆并运行以快速查看 LCUI 的运行方式以及 LC Design 组件库的效果。**
+一个仿浏览器界面的应用程序，用于展示 LCUI 的图形界面渲染能力和 LCUI Router 的路由导航功能。
+
+[![运行效果图](./screenshot.gif "运行效果图")](./screenshot.gif)
 
 ## 使用
 
@@ -21,10 +23,10 @@
 
 ```bash
 # 克隆这个仓库
-git clone https://github.com/lc-ui/lc-design-app
+git clone https://github.com/lc-ui/lcui-router-app
 
 # 进入仓库
-cd lc-design-app
+cd lcui-router-app
 
 # 安装 NodeJS 依赖包
 npm install
@@ -41,16 +43,17 @@ lcpkg run start --mode debug
 - 一些资源文件。
 - 一些能方便你构建应用程序的脚本。
 - [CMake](https://cmake.org/) 和 [XMake](https://xmake.io/) 构建工具的配置文件，你可以选择其中一个你熟悉的来使用。
-- 简单的数据存储操作实现，在 `src/lib/store.c` 中可找到。
 - 用于描述用户界面样式的 [.scss](https://sass-lang.com/guide) 文件。
-- 用于显示应用程序信息的 `about` 组件。
-- 实现了简单布局和交互的 `home` 视图。
-- 提供 [LC Design](https://github.com/lc-ui/lc-design) 组件库的一些组件效果预览的 `preview` 视图。
+- 浏览器界面的简单实现。
+- 欢迎页面、关于页面、文件浏览页面、404 页面、新标签页面。
+- [LCUI Router](https://github.com/lc-soft/lcui-router) 的路由导航功能示例。
+- [LC Design](https://github.com/lc-ui/lc-design) 组件库的使用示例。
 
 ## 项目结构
 
 - **`app`**: 包含应用程序运行所需的资源文件。你可以将它当成应用程序的工作目录，在发布应用程序时你只需要打包这个目录内的文件。
 - **`build`**: 包含构建工具输出的文件。
+- **`config/router.js`**: LCUI Router 的配置文件，可使用 `lcui compile router` 命令将其编译为 `src/lib/router.c` 文件。
 - **`scripts`**: 包含构建相关的脚本和配置文件。
 - **`src`**: 包含源代码。
   - **`ui`**: 包含用户界面相关的源代码。
