@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <lcui-app>
   <ui>
-    <w class="v-home__cards container d-flex justify-content-center">
-      <router-link class="v-home__card" to="/welcome">
-        <icon class="v-home__card-icon text-pink" name="emoticon-cool-outline" />
-        <text class="v-home__card-title">Welcome!</text>
-      </router-link>
-      <router-link class="v-home__card" to="/file">
-        <icon class="v-home__card-icon text-orange" name="folder-search" />
-        <text class="v-home__card-title">File</text>
-      </router-link>
-      <router-link class="v-home__card" to="/help">
-        <icon class="v-home__card-icon text-blue" name="help-box" />
-        <text class="v-home__card-title">About</text>
-      </router-link>
-    </w>
+    <w class=" container">
+      <w class="v-home__cards d-flex justify-content-center align-items-center">
+        <router-link class="v-home__card" to="/welcome">
+          <icon class="v-home__card-icon text-pink" name="emoticon-cool-outline" />
+          <text class="v-home__card-title">Welcome!</text>
+        </router-link>
+        <router-link class="v-home__card" to="/file">
+          <icon class="v-home__card-icon text-orange" name="folder-search" />
+          <text class="v-home__card-title">File</text>
+        </router-link>
+        <router-link class="v-home__card" to="/help">
+          <icon class="v-home__card-icon text-blue" name="help-box" />
+          <text class="v-home__card-title">About</text>
+        </router-link>
+      </w>
+      </w>
   </ui>
 </lcui-app>

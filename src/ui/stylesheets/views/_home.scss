@@ -1,5 +1,14 @@
 .v-home {
+  display: flex;
+  height: 100%;
+  padding-bottom: 60px;
+  align-items: center;
 
+  .container {
+    display: flex;
+    justify-content: center;
+    max-width: $home-card-width * 4;
+  }
 }
 
 .v-home__card-icon {
@@ -18,6 +27,7 @@
   display: block;
   text-align: center;
   line-height: $home-card-title-line-height;
+  margin-bottom: $home-card-spacing / 2;
 }
 
 .v-home__card {
