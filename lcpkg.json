@@ -29,27 +29,39 @@
   },
   "private": true,
   "dependencies": {
-    "lcui-router": {
-      "version": "0.1.0",
-      "uri": "file:C:\\Users\\LC\\Documents\\GitHub\\lcui-router\\lcpkg\\dist\\lcui-router-0.1.0_all.lcpkg.zip",
+    "LCUI": {
+      "version": "v2.0.0",
+      "uri": "github:lc-soft/LCUI",
       "resolved": {
-        "all": "C:\\Users\\LC\\Documents\\GitHub\\lcui-router\\lcpkg\\dist\\lcui-router-0.1.0_all.lcpkg.zip"
+        "all": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x86-windows.lcpkg.zip",
+        "x64-uwp": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x64-uwp.lcpkg.zip",
+        "x64-windows": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x64-windows.lcpkg.zip",
+        "x86-uwp": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x86-uwp.lcpkg.zip",
+        "x86-windows": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x86-windows.lcpkg.zip"
       },
       "linkage": "auto"
     },
-    "LCUI": {
-      "version": "1.3.0",
-      "uri": "file:C:\\Users\\LC\\Documents\\GitHub\\LCUI\\lcpkg\\dist\\LCUI-1.3.0_all.lcpkg.zip",
+    "lcui-router": {
+      "version": "v0.1.0",
+      "uri": "github:lc-soft/lcui-router",
       "resolved": {
-        "all": "C:\\Users\\LC\\Documents\\GitHub\\LCUI\\lcpkg\\dist\\LCUI-1.3.0_all.lcpkg.zip"
+        "x64-uwp": "https://github.com/lc-soft/lcui-router/releases/download/v0.1.0/lcui-router-0.1.0_x64-uwp.lcpkg.zip",
+        "all": "https://github.com/lc-soft/lcui-router/releases/download/v0.1.0/lcui-router-0.1.0_x86-windows.lcpkg.zip",
+        "x64-windows": "https://github.com/lc-soft/lcui-router/releases/download/v0.1.0/lcui-router-0.1.0_x64-windows.lcpkg.zip",
+        "x86-uwp": "https://github.com/lc-soft/lcui-router/releases/download/v0.1.0/lcui-router-0.1.0_x86-uwp.lcpkg.zip",
+        "x86-windows": "https://github.com/lc-soft/lcui-router/releases/download/v0.1.0/lcui-router-0.1.0_x86-windows.lcpkg.zip"
       },
       "linkage": "auto"
     },
     "lc-design": {
-      "version": "1.0.0",
-      "uri": "file:C:\\Users\\LC\\Documents\\GitHub\\lc-design\\lcpkg\\dist\\lc-design-1.0.0_all.lcpkg.zip",
+      "version": "v1.1.0",
+      "uri": "github:lc-ui/lc-design",
       "resolved": {
-        "all": "C:\\Users\\LC\\Documents\\GitHub\\lc-design\\lcpkg\\dist\\lc-design-1.0.0_all.lcpkg.zip"
+        "x64-uwp": "https://github.com/lc-ui/lc-design/releases/download/v1.1.0/lc-design-1.1.0_x64-uwp.lcpkg.zip",
+        "all": "https://github.com/lc-ui/lc-design/releases/download/v1.1.0/lc-design-demo.zip",
+        "x64-windows": "https://github.com/lc-ui/lc-design/releases/download/v1.1.0/lc-design-1.1.0_x64-windows.lcpkg.zip",
+        "x86-uwp": "https://github.com/lc-ui/lc-design/releases/download/v1.1.0/lc-design-1.1.0_x86-uwp.lcpkg.zip",
+        "x86-windows": "https://github.com/lc-ui/lc-design/releases/download/v1.1.0/lc-design-1.1.0_x86-windows.lcpkg.zip"
       },
       "linkage": "auto"
     }
