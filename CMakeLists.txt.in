@@ -18,10 +18,11 @@ else()
     set(LCPKG_DIR "${PROJECT_SOURCE_DIR}/lcpkg/installed/x64-linux")
 endif(WIN32)
 
-link_directories("${LCPKG_DIR}/lib")
+link_directories("${LCPKG_DIR}/lib" "${PROJECT_SOURCE_DIR}/vendor/lib")
 include_directories(
     "${PROJECT_SOURCE_DIR}/include"
     "${PROJECT_SOURCE_DIR}/src/lib"
+    "${PROJECT_SOURCE_DIR}/vendor/include"
     "${LCPKG_DIR}/include"
 )
 aux_source_directory(src DIR_SRC)

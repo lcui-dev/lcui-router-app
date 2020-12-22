@@ -2,9 +2,11 @@ const path = require('path')
 
 class BuildOptions {
   constructor({
+    tool = null,
     mode = 'release',
     arch = 'x64'
   } = {}) {
+    this.tool = tool
     this.mode = mode
     this.arch = arch
     this.platform = process.platform == 'win32' ? 'windows' : process.platform

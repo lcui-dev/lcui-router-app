@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <LCUI.h>
 #include <LCDesign.h>
 #include <LCUI/gui/widget.h>

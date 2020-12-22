@@ -3,6 +3,7 @@ const fs = require('fs-extra')
 const { execSync } = require('child_process')
 const BuildOptions = require('./options')
 const logger = require('./logger')
+const { config } = require('process')
 
 const tools = [
   require('./xmake'),
@@ -12,17 +13,29 @@ const tools = [
 class Builder {
   constructor(options) {
     this.tool = null
-    this.options = new BuildOptions(options)
+    this.rawOptions = options
+    this.configFile = path.resolve(__dirname, '..', '..', 'config', 'builder.json')
+    this.options = fs.existsSync(this.configFile) ? require(this.configFile) : {}
+    this.options = new BuildOptions({ ...this.options, ...this.rawOptions })
+    this.detechTool()
+  }
 
-    for (let tool of tools) {
+  detechTool() {
+    this.tool = null
+    if (this.options.tool && this.options.tool !== 'auto') {
+      this.tool = tools.find((tool) => tool.name === this.options.tool)
+      return
+    }
+    this.tool = tools.find((tool) => {
       try {
         if (execSync(tool.test, { encoding: 'utf-8' })) {
-          this.tool = tool
+          return true
         }
       } catch (err) {
-        continue
+        return false
       }
-    }
+      return false
+    })
     if (!this.tool) {
       throw new Error('the build tool was not found! currently supports cmake and xmake, please install one of them.')
     }
@@ -35,6 +48,23 @@ class Builder {
 
   configure() {
     logger.log('\n[configure]')
+    const configDir = path.dirname(this.configFile)
+    this.options = new BuildOptions(this.rawOptions)
+    this.detechTool()
+    if (!fs.existsSync(configDir)) {
+      fs.mkdirSync(configDir, { recursive: true })
+    }
+    if (!fs.existsSync(this.options.buildDir)) {
+      fs.mkdirSync(this.options.buildDir)
+    }
+    const config = {
+      mode: this.options.mode,
+      arch: this.options.arch,
+      tool: this.tool.name
+    }
+    fs.writeFileSync(this.configFile, JSON.stringify(config, null, 2))
+    logger.log(`write config to ${this.configFile}:`)
+    logger.log(config)
     return this.tool.configure(this.options)
   }
 
@@ -59,13 +89,7 @@ class Builder {
       return
     }
     logger.log('\n[after build]')
-    logger.log(`copy ${opts.binDir} -> ${opts.targetDir}`)
-    fs.copySync(opts.binDir, opts.targetDir)
-    if (this.options.platform == 'windows') {
-      const targetPath = path.join(opts.targetDir, opts.mode, opts.targetFileName)
-      logger.log(`copy ${targetPath} -> ${opts.targetPath}`)
-      fs.copySync(targetPath, opts.targetPath)
-    }
+    execSync(`lcpkg export --filter runtime --arch ${opts.arch} app`, { stdio: 'inherit' })
   }
 }
 

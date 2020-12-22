@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <LCUI.h>
 #include <LCDesign.h>
 #include <LCUI/input.h>

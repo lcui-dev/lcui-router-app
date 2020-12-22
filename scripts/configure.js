@@ -28,6 +28,13 @@ function configure(options) {
 
 program
   .usage('[options]')
+  .option('--tool <tool>', 'specify build tool', (tool, defaultTool) => {
+    if (!['cmake', 'xmake'].includes(tool)) {
+      logger.error(`invalid tool: ${tool}`)
+      return defaultTool
+    }
+    return tool
+  }, 'auto')
   .option('--mode <mode>', 'specify build mode', (mode, defaultMode) => {
     if (!['debug', 'release'].includes(mode)) {
       logger.error(`invalid mode: ${mode}`)
@@ -44,7 +51,7 @@ program
   }, 'x64')
   .action(() => {
     try {
-      configure({ mode: program.mode, arch: program.arch })
+      configure({ mode: program.mode, arch: program.arch, tool: program.tool })
     } catch (err) {
       logger.error(err.message)
       process.exit(-1)
