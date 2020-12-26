@@ -1,5 +1,7 @@
 # lcui-router-app
 
+[![GitHub Actions](https://github.com/lc-ui/lcui-router-app/workflows/C%2FC%2B%2B%20CI/badge.svg)](https://github.com/lc-ui/lcui-router-app/actions)
+
 (**English**/[中文](README.zh-cn.md))
 
 A very simple browser-like application to show the LCUI and LCUI Router features.
@@ -13,7 +15,7 @@ To clone and run this repository you'll need install the following tools on your
 - [Git](https://git-scm.com)
 - [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com))
 - [LCPkg](https://github.com/lc-soft/lcpkg):
-    ```shell
+    ```bash
     npm install -g lcpkg
     lcpkg setup
     ```
@@ -21,7 +23,7 @@ To clone and run this repository you'll need install the following tools on your
 
 From your command line:
 
-```shell
+```bash
 # Clone this repository
 git clone https://github.com/lc-ui/lcui-router-app
 
@@ -34,8 +36,24 @@ npm install
 # Install C/C++ dependencies for x64 CPU architecture
 lcpkg install --arch x64
 
-# Run the app with debug mode
-lcpkg run start --mode debug
+# Run the app
+npm start
+```
+
+Other useful commands:
+
+```bash
+# Configure the compiler to compile in debug mode
+npm run configure -- --mode debug
+
+# Use CMake to build this repository
+npm run configure -- --tool cmake
+
+# Compile css files
+npm run build:css
+
+# Compile binary files
+npm run build:bin
 ```
 
 ## What's included

@@ -1,5 +1,7 @@
 # lcui-router-app
 
+[![GitHub Actions](https://github.com/lc-ui/lcui-router-app/workflows/C%2FC%2B%2B%20CI/badge.svg)](https://github.com/lc-ui/lcui-router-app/actions)
+
 ([English](README.md)/**中文**)
 
 一个仿浏览器界面的应用程序，用于展示 LCUI 的图形界面渲染能力和 LCUI Router 的路由导航功能。
@@ -12,7 +14,7 @@
 
 - [Git](https://git-scm.com)
 - [Node.js](https://nodejs.org/en/download/) (自带 [npm](http://npmjs.com))
-- [LCPkg](https://github.com/lc-soft/lcpkg):
+- [LCPkg](https://github.com/lc-soft/lcpkg)（仅 Windows 用户需要安装它）:
     ```bash
     npm install -g lcpkg
     lcpkg setup
@@ -34,9 +36,29 @@ npm install
 # 安装适用于 x64 CPU 架构的 C/C++ 依赖库
 lcpkg install --arch x64
 
-# 以调试模式运行应用程序
-lcpkg run start --mode debug
+# 直接运行应用程序
+npm start
 ```
+
+其它有用的命令:
+
+```bash
+# 配置编译器使用 debug 模式编译
+npm run configure -- --mode debug
+
+# 使用 CMake 构建这个项目
+npm run configure -- --tool cmake
+
+# 编译样式文件
+npm run build:css
+
+# 编译可执行文件
+npm run build:bin
+```
+
+## 文档
+
+你可以从[这篇文章](https://zhuanlan.zhihu.com/p/115632949)中了解到此项目是如何被设计和开发出来的。
 
 ## 包括什么
 
