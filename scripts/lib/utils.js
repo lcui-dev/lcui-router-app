@@ -1,34 +1,50 @@
-function flatObjectProperties(obj) {
-  const props = {};
+function getProperty(obj, propertyKey, defaultValue) {
+  let selectedProperty = obj;
 
-  function flat(o, prefix) {
-    Object.keys(o).forEach((k) => {
-      const key = prefix ? `${prefix}.${k}` : k;
-
-      if (typeof o[k] === 'object') {
-        flat(o[k], key);
-      } else {
-        props[key] = o[k];
-      }
-    })
+  propertyKey.split('.').some((key) => {
+    selectedProperty = selectedProperty[key];
+    if (typeof selectedProperty === 'undefined') {
+      return true;
+    }
+    return false;
+  });
+  if (typeof selectedProperty === 'undefined') {
+    return defaultValue;
   }
-
-  flat(obj);
-  return props;
+  return selectedProperty;
 }
 
 function format(template, data) {
-  let output = template;
-  const props = flatObjectProperties(data);
-  const keys = Object.keys(props);
-  const regs = keys.map(k => new RegExp(`{{${k}}}`, 'g'));
+  const filterFnMap = {
+    escape(value) {
+      if (Array.isArray(value)) {
+        return value.map((item) => JSON.stringify(item));
+      }
+      return JSON.stringify(value);
+    },
+    join(arr) {
+      return arr.join(',');
+    },
+    join_with_space(arr) {
+      return arr.join(' ');
+    }
+  };
 
-  regs.forEach((reg, i) => {
-    output = output.replace(reg, props[keys[i]]);
+  return template.replace(/\{\{.+\}\}/g, (str) => {
+    const [key, ...filters] = str.substr(2, str.length - 4).split('|').map((item) => item.trim());
+    return filters.reduce(
+      (prevValue, filter) => {
+        if (typeof filterFnMap[filter] !== 'function') {
+          throw new Error(`${filter} is not a filter`);
+        }
+        return filterFnMap[filter](prevValue);
+      },
+      getProperty(data, key, '')
+    );
   });
-  return output;
 }
 
 module.exports = {
-  format
-}
+  format,
+  getProperty
+};

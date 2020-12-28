@@ -1,29 +1,24 @@
-const Builder = require('./lib/builder')
-const logger = require('./lib/logger')
-const program = require('commander')
+const program = require('commander');
+const Builder = require('./lib/builder');
+const logger = require('./lib/logger');
+const { getProperty } = require('./lib/utils');
+const pkg = require('../lcpkg.json');
 
 function build(options) {
   if (new Builder(options).build().status !== 0) {
-    throw new Error('build failed.')
+    throw new Error('build failed.');
   }
 }
 
 program
   .usage('[options]')
-  .option('--mode <mode>', 'specify build mode', (mode, defaultMode) => {
-    if (!['debug', 'release'].includes(mode)) {
-      logger.error(`invalid mode: ${mode}`)
-      return defaultMode
-    }
-    return mode
-  }, 'release')
   .action(() => {
     try {
-      build({ mode: program.mode })
+      build({ hooks: getProperty(pkg, 'builder.hooks') });
     } catch (err) {
-      logger.error(err.message)
-      process.exit(-1)
+      logger.error(err);
+      process.exit(-1);
     }
-    process.exit(0)
+    process.exit(0);
   })
-  .parse(process.argv)
+  .parse(process.argv);

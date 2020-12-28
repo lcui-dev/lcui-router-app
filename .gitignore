@@ -11,9 +11,11 @@ app/store.data
 app/assets/fonts
 app/assets/stylesheets
 scripts/*.json
+config/builder.json
 Release
 Debug
 CMakeLists.txt
+xmake.lua
 !src/**/**/CMakeLists.txt
 *.pdb
 *.exe
