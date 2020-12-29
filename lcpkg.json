@@ -29,7 +29,8 @@
     "hooks": {
       "afterBuild": "lcpkg export --filter runtime --arch {{arch}} app",
       "beforeBuild": "lcpkg export --filter build --arch {{arch}} vendor"
-    }
+    },
+    "linkDirs": ["vendor/lib"]
   },
   "scripts": {
     "build:bin": "node ./scripts/build-bin.js",

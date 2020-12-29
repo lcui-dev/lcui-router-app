@@ -7,26 +7,33 @@ const Builder = require('./lib/builder');
 const { format, getProperty } = require('./lib/utils');
 const logger = require('./lib/logger');
 
-function findLibs(deps, mode, arch) {
+function findLibs(mode, arch) {
   const libs = [];
   const packagesDir = path.resolve(os.homedir(), '.lcpkg', 'packages');
+  const linkSearchDirs = [];
 
-  Object.keys(deps).forEach((name) => {
-    const { version: v } = deps[name];
+  getProperty(pkg, 'builder.linkDirs', []).forEach((linkDir) => {
+    linkSearchDirs.push(path.resolve(linkDir));
+  });
+  Object.keys(pkg.dependencies).forEach((name) => {
+    const { version: v } = pkg.dependencies[name];
     const version = v.startsWith('v') ? v.substr(1) : v;
     const platform = `${arch}-${process.platform === 'win32' ? 'windows' : process.platform}`;
     const packageDir = path.resolve(packagesDir, name, version);
-    const libDir = path.resolve(packageDir, platform, mode === 'debug' ? 'debug/lib' : 'lib');
-
-    fs.readdirSync(libDir).forEach((file) => {
-      if (file.endsWith('.a')) {
-        libs.push(file.substr(0, file.length - 2));
-      } else if (file.endsWith('.lib')) {
-        libs.push(file.substr(0, file.length - 4));
+    linkSearchDirs.push(path.resolve(packageDir, platform, mode === 'debug' ? 'debug/lib' : 'lib'));
+  });
+  linkSearchDirs.forEach((linkDir) => {
+    if (!fs.existsSync(linkDir) || !fs.statSync(linkDir).isDirectory()) {
+      return;
+    }
+    fs.readdirSync(linkDir).forEach((file) => {
+      const { name, ext } = path.parse(file);
+      if (['.a', '.so', '.lib'].includes(ext)) {
+        libs.push(name.startsWith('lib') ? name.substr(3) : name);
       }
     });
   });
-  return libs;
+  return Array.from(new Set(libs));
 }
 
 function configure(options) {
@@ -38,7 +45,7 @@ function configure(options) {
       release: os.release()
     },
     build_time: new Date().toISOString(),
-    libs: findLibs(getProperty(pkg, 'dependencies', {}), options.mode, options.arch)
+    libs: findLibs(options.mode, options.arch)
   };
 
   getProperty(pkg, 'builder.configureFiles', []).forEach((file) => {

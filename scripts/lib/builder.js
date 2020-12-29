@@ -84,31 +84,33 @@ class Builder {
     return result;
   }
 
-  beforeBuild() {
-    const opts = this.options;
-    const script = format(getProperty(opts, 'hooks.beforeBuild', ''), opts);
-
-    if (!fs.existsSync(opts.buildDir)) {
-      fs.mkdirSync(opts.buildDir);
-    }
+  callHook(name) {
+    const script = format(getProperty(this.options, `hooks.${name}`, ''), this.options);
     if (script) {
-      logger.log(`\n[before build]\n${script}`);
-      execSync(script);
+      logger.log(`\n[${name}]\n${script}`);
+      try {
+        execSync(script);
+      } catch (err) {
+        logger.error(err.message);
+      }
     }
+  }
+
+  beforeBuild() {
+    if (!fs.existsSync(this.options.buildDir)) {
+      fs.mkdirSync(this.options.buildDir);
+    }
+    this.callHook('beforeBuild');
   }
 
   afterBuild() {
     const opts = this.options;
     const file = path.resolve(opts.targetDir, opts.mode, opts.targetFileName);
-    const script = format(getProperty(opts, 'hooks.afterBuild', ''), opts);
 
     if (fs.existsSync(file)) {
       fs.copyFileSync(file, opts.targetPath);
     }
-    if (script) {
-      logger.log(`\n[after build]\n${script}`);
-      execSync(script);
-    }
+    this.callHook('afterBuild');
   }
 }
 
