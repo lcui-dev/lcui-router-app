@@ -1,15 +1,22 @@
 const { spawnSync } = require('child_process');
+const logger = require('./logger');
+
+function runXMake(params, cwd) {
+  logger.log(`> cd ${cwd}`);
+  logger.log(`> xmake ${params.join(' ')}\n`);
+  return spawnSync('xmake', params, { stdio: 'inherit', cwd });
+}
 
 module.exports = {
   name: 'xmake',
   test: 'xmake --version',
   configure(options) {
-    return spawnSync('xmake', ['config', `--mode=${options.mode}`], { stdio: 'inherit', cwd: options.topdir });
+    return runXMake(['config', `--mode=${options.mode}`], options.topDir);
   },
   build(options) {
-    return spawnSync('xmake', ['build'], { stdio: 'inherit', cwd: options.topdir });
+    return runXMake(['build'], options.topDir);
   },
   run(options) {
-    return spawnSync('xmake', ['run'], { stdio: 'inherit', cwd: options.topdir });
+    return runXMake(['run'], options.topDir);
   }
 };
