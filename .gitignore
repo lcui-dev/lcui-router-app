@@ -15,8 +15,9 @@ config/builder.json
 Release
 Debug
 CMakeLists.txt
+CMakeLists.txt.in
 xmake.lua
-!src/**/**/CMakeLists.txt
+xmake.lua.in
 *.pdb
 *.exe
 *.dll
