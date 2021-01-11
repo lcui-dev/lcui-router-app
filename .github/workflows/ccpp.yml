@@ -13,17 +13,17 @@ jobs:
     - name: install Node.js packages
       run: |
         npm install
-        npm install -g lcpkg
+        npm install -g lcpkg @lcui/cli
     - name: setup
-      run: lcpkg setup
+      run: |
+        lcpkg setup
+        npm run generate-makefile
     - name: install dependencies
       run: lcpkg install --arch x64
     - name: build css
       run: npm run build:css
     - name: build bin
-      run: |
-        npm run configure --arch x64
-        npm run build:bin
+      run: lcui build
 
   build-linux:
     name: Build on Ubuntu
@@ -33,16 +33,16 @@ jobs:
     - name: install xmake
       uses: xmake-io/github-action-setup-xmake@v1
     - name: install Node.js packages
-      run: npm install
+      run: |
+        npm install
+        npm install -g @lcui/cli
     - name: setup
-      run: sh ./setup.sh
+      run: |
+        sh ./setup.sh
+        npm run generate-makefile
     - name: build css
       run: npm run build:css
     - name: xmake
-      run: |
-        npm run configure -- --tool xmake
-        npm run build:bin
+      run: lcui build --tool xmake
     - name: cmake
-      run: |
-        npm run configure -- --tool cmake
-        npm run build:bin
+      run: lcui build --tool cmake
