@@ -27,10 +27,12 @@
       "xmake.lua.in"
     ],
     "hooks": {
-      "afterBuild": "lcpkg export --filter runtime --arch {{arch}} app",
-      "beforeBuild": "lcpkg export --filter build --arch {{arch}} vendor"
+      "afterBuild": "lcpkg export --filter runtime --arch {{arch}} --mode {{mode}} app",
+      "beforeBuild": "lcpkg export --filter build --arch {{arch}} --mode {{mode}} vendor"
     },
-    "linkDirs": ["vendor/lib"]
+    "linkDirs": [
+      "vendor/lib"
+    ]
   },
   "scripts": {
     "build:bin": "node ./scripts/build-bin.js",

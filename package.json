@@ -6,11 +6,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:bin": "node ./scripts/build-bin.js",
+    "generate-makefile": "lcui generate makefile cmake && lcui generate makefile xmake",
+    "build:bin": "lcui build",
     "build:css": "node ./scripts/build-css.js",
-    "configure": "node ./scripts/configure.js",
-    "run": "node ./scripts/run.js",
-    "start": "npm run configure && npm run build:bin && npm run build:css && npm run run",
+    "run": "lcui run",
+    "start": "npm run generate-makefile && npm run build:css && lcui build && lcui run",
     "build-changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "update-changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
@@ -29,5 +29,8 @@
     "fs-extra": "^8.1.0",
     "husky": "^3.1.0",
     "node-sass": "^4.13.1"
+  },
+  "dependencies": {
+    "pascal-case": "^3.1.2"
   }
 }
