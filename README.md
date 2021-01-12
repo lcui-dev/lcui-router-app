@@ -19,6 +19,10 @@ To clone and run this repository you'll need install the following tools on your
     npm install -g lcpkg
     lcpkg setup
     ```
+- [LCUI CLI](https://github.com/lc-ui/lcui-cli):
+    ```bash
+    npm install -g @lcui/cli
+    ```
 - [CMake](https://cmake.org/) or [XMake](https://xmake.io/)
 
 From your command line:
@@ -43,17 +47,14 @@ npm start
 Other useful commands:
 
 ```bash
-# Configure the compiler to compile in debug mode
-npm run configure -- --mode debug
+# Build this repository in release mode
+lcui build --mode release
 
-# Use CMake to build this repository
-npm run configure -- --tool cmake
+# Build this repository with CMake
+lcui build --tool cmake
 
 # Compile css files
 npm run build:css
-
-# Compile binary files
-npm run build:bin
 ```
 
 ## What's included

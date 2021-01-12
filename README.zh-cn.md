@@ -19,6 +19,10 @@
     npm install -g lcpkg
     lcpkg setup
     ```
+- [LCUI CLI](https://github.com/lc-ui/lcui-cli):
+    ```bash
+    npm install -g @lcui/cli
+    ```
 - [CMake](https://cmake.org/) 或 [XMake](https://xmake.io/)
 
 之后，在你的终端里运行：
@@ -43,17 +47,14 @@ npm start
 其它有用的命令:
 
 ```bash
-# 配置编译器使用 debug 模式编译
-npm run configure -- --mode debug
+# 使用 release 模式构建项目
+lcui build --mode release
 
-# 使用 CMake 构建这个项目
-npm run configure -- --tool cmake
+# 使用 CMake 构建项目
+lcui build --tool cmake
 
 # 编译样式文件
 npm run build:css
-
-# 编译可执行文件
-npm run build:bin
 ```
 
 ## 文档
