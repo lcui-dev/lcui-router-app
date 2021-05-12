@@ -24,7 +24,7 @@ void About_OnInit(LCUI_Widget w)
 	LCUI_Widget bugs_url;
 	LCUI_Widget item;
 
-	char os_info_str[32];
+	char os_info_str[256];
 	char lcui_version_str[64];
 	char lcui_router_version_str[64];
 	char lc_design_version_str[64];
