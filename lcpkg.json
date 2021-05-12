@@ -34,24 +34,18 @@
       "vendor/lib"
     ]
   },
-  "scripts": {
-    "build:bin": "node ./scripts/build-bin.js",
-    "build:css": "node ./scripts/build-css.js",
-    "configure": "node ./scripts/configure.js",
-    "run": "node ./scripts/run.js",
-    "start": "lcpkg run configure && lcpkg run build:bin && lcpkg run build:css && lcpkg run run"
-  },
   "private": true,
   "dependencies": {
     "LCUI": {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "resolved": {
-        "all": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x86-windows.lcpkg.zip",
-        "x64-uwp": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x64-uwp.lcpkg.zip",
-        "x64-windows": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x64-windows.lcpkg.zip",
-        "x86-uwp": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x86-uwp.lcpkg.zip",
-        "x86-windows": "https://github.com/lc-soft/LCUI/releases/download/v2.0.0/LCUI-2.0.0_x86-windows.lcpkg.zip"
+        "x64-uwp": "https://github.com/lc-soft/LCUI/releases/download/v2.1.0/LCUI-2.1.0_x64-uwp.lcpkg.zip",
+        "all": "https://github.com/lc-soft/LCUI/releases/download/v2.1.0/liblcui2_2.1.0-1_amd64.deb.zip",
+        "x64-windows": "https://github.com/lc-soft/LCUI/releases/download/v2.1.0/LCUI-2.1.0_x64-windows.lcpkg.zip",
+        "x86-uwp": "https://github.com/lc-soft/LCUI/releases/download/v2.1.0/LCUI-2.1.0_x86-uwp.lcpkg.zip",
+        "x86-windows": "https://github.com/lc-soft/LCUI/releases/download/v2.1.0/LCUI-2.1.0_x86-windows.lcpkg.zip"
       },
+      "sourceRequired": false,
       "uri": "github:lc-soft/LCUI",
       "linkage": "auto"
     },
